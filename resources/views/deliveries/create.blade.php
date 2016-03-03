@@ -84,13 +84,13 @@
                         </div>
 
 
-                    <form id="user-search" class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}">
+
                         <label class="col-md-4 control-label">Search for User: </label>
                         <div class="input-group col-md-6">
                           <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-user"></i></span>
                           <input type="text" id="input-search" class="form-control" placeholder="First name or last name" aria-describedby="sizing-addon2" name="search">
                         </div>
-                    </form>
+
 
                     <table class="table table-striped delivery-table {{ $errors->has('user_id') ? ' has-error' : '' }}">
 
@@ -145,7 +145,7 @@
                 $search = "all";
             }
 
-            $.get('http://localhost:8888/user-ajax/'+$search, function(data){
+            $.get('http://localhost:8888/search/user/'+$search, function(data){
 
                 $('#user-list').empty();
                 for (i = 0; i < data.length; i++) {
@@ -165,4 +165,6 @@
 
 
     </script>
+
+
 @endsection

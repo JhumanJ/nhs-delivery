@@ -47,9 +47,17 @@ Route::group(['middleware' => ['web']], function () {
     //Route::delete('/delivery/{task}', 'DeliveryController@destroy');
 
     //--------AJAX--------
-    Route::get('/user-ajax/{search}', [
+
+    //Search for user when add package
+    Route::get('/search/user/{search}', [
         'middleware' => 'receptionnist',
-        'uses' => 'UserController@userAjax'
+        'uses' => 'UserController@indexSearchAjax'
+    ]);
+
+    //Search for delivery on user page
+    Route::get('/search/delivery/{search}', [
+        'middleware' => 'auth',
+        'uses' => 'DeliveryController@indexSearchAjax'
     ]);
 
 

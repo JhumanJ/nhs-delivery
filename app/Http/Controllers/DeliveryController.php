@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class DeliveryController extends Controller
 {
@@ -29,11 +30,13 @@ class DeliveryController extends Controller
     {
 
         $awaiting_deliveries = Delivery::where('user_id', $request->user()->id)
+                                ->orderBy('updated_at', 'desc')
                                 ->where('status', 1)
                                 ->get();
 
         $past_deliveries = Delivery::where('user_id', $request->user()->id)
                             ->where('status', 2)
+                            ->orderBy('updated_at', 'desc')
                             ->get();
 
         return view('deliveries.index', [
@@ -43,6 +46,7 @@ class DeliveryController extends Controller
 
     }
 
+    //Save new delivery
     public function store(Request $request)
     {
 
@@ -70,20 +74,24 @@ class DeliveryController extends Controller
             'updated_at'  => $request->updated_at,
         ]);
 
-        return redirect('/deliveries');
+        return redirect('/deliveries-all');
     }
 
+    //return all deliveries
     public function indexAll(Request $request) {
 
         $awaiting_deliveries = Delivery::where('deliveries.status', 1)
+                    ->orderBy('deliveries.updated_at', 'desc')
                     ->join('users', 'users.id', '=', 'user_id')
                     ->get();
 
         $past_deliveries = Delivery::where('deliveries.status', 2)
+                    ->orderBy('deliveries.updated_at', 'desc')
                     ->join('users', 'users.id', '=', 'user_id')
                     ->get();;
 
         $cancelled_deliveries = Delivery::where('deliveries.status', 0)
+            ->orderBy('deliveries.updated_at', 'desc')
             ->join('users', 'users.id', '=', 'user_id')
             ->get();;
 
@@ -93,6 +101,54 @@ class DeliveryController extends Controller
             'cancelled_deliveries'  => $cancelled_deliveries,
         ]);
 
+    }
+
+    public function indexSearchAjax(Request $request, $search){
+
+        //Allows only ajax request
+        if (!request()->ajax()){
+            return redirect('deliveries');
+        }
+
+        //search is the parameter
+        if ($search != "" && $search != " " && $search != "all") {
+            $id = $request->getUser();
+
+            $deliveries = DB::table('deliveries')->where('reference','like', '%'.$search.'%')
+                ->orderBy('updated_at', 'desc')
+                ->where('user_id',$request->user()->id)
+                ->whereBetween('status', [1, 2])
+                ->orWhere('description', 'like', '%'.$search.'%')
+                ->get();
+
+            $result = array();
+            foreach ($deliveries as $delivery){
+                $array['reference']     =$delivery->reference;
+                $array['description']   =$delivery->description;
+                $array['size']          =$delivery->size;
+                $array['weight']        =$delivery->weight;
+
+                array_push($result,$array);
+            }
+        } else if($search == "all"){
+            $deliveries = DB::table('deliveries')->where('user_id',$request->user()->id)
+                                ->orderBy('updated_at', 'desc')
+                                ->whereBetween('status', [1, 2])
+                                ->get();
+
+            $result = array();
+            foreach ($deliveries as $delivery){
+                $array['reference']     =$delivery->reference;
+                $array['description']   =$delivery->description;
+                $array['size']          =$delivery->size;
+                $array['weight']        =$delivery->weight;
+
+                array_push($result,$array);
+            }
+        }
+
+
+        return response()->json($result);
     }
 
 

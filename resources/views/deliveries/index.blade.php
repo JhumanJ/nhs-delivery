@@ -8,11 +8,22 @@
 
     <!-- Bootstrap Boilerplate... -->
     <div class="row">
+    <div class="container">
+        <div class="col-md-8 col-md-offset-2">
+            <form id="delivery-search" class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}">
+                <label class="col-md-4 control-label">Search for delivery: </label>
+                <div class="input-group col-md-6">
+                  <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-archive"></i></span>
+                  <input type="text" id="input-search" class="form-control" placeholder="Reference or description" aria-describedby="sizing-addon2" name="search">
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="col-md-8 col-md-offset-2">
 
     <div class="panel-body">
-        <!-- Display Validation Errors -->
-        @include('common.errors')
+
 
         @if (count($awaiting_deliveries) > 0)
             <div class="panel panel-default">
@@ -32,7 +43,7 @@
                         </thead>
 
                         <!-- Table Body -->
-                        <tbody>
+                        <tbody id="delivery-list">
                         @foreach ($awaiting_deliveries as $delivery)
                             @if($delivery->status==1)
                                 <tr>
@@ -133,4 +144,35 @@
 
              @endif
          @endif
+
+         <script>
+
+            $( document ).ready(function() {
+
+                $('#input-search').on('input',function(){
+                    $search = $('#input-search').val();
+                    if ($search == "" || $search == ' '){
+                        $search = "all";
+                    }
+
+                    $.get('http://localhost:8888/search/delivery/'+$search, function(data){
+
+                        $('#delivery-list').empty();
+                        for (i = 0; i < data.length; i++) {
+                            $('#delivery-list').append('<tr><td class="table-text"><div>'+ data[i].reference + '</div></td><td class="table-text"><div>'+ data[i].description +'</div></td><td class="table-text"><div>'+ data[i].size +'</div></td><td class="table-text"><div>'+ data[i].weight +'</div></td></tr>');
+                        }
+
+
+
+                    })
+
+                });
+
+            });
+
+
+
+    </script>
+
+
 @endsection

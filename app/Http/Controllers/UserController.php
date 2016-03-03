@@ -32,7 +32,12 @@ class UserController extends Controller
         return $user;
     }
 
-    public function userAjax($search){
+    public function indexSearchAjax($search){
+
+        //Allows only ajax request
+        if (!request()->ajax()){
+            return redirect('create');
+        }
 
         //search is the parameter
         if ($search != "" && $search != " " && $search != "all") {
