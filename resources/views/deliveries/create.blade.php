@@ -88,7 +88,7 @@
                         <label class="col-md-4 control-label">Search for User: </label>
                         <div class="input-group col-md-6">
                           <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-user"></i></span>
-                          <input type="text" id="input-search" class="form-control" placeholder="First name, last name, department..." aria-describedby="sizing-addon2">
+                          <input type="text" id="input-search" class="form-control" placeholder="First name or last name" aria-describedby="sizing-addon2" name="search">
                         </div>
                     </form>
 
@@ -103,7 +103,7 @@
 
 
                                 <!-- Table Body -->
-                                <tbody>
+                                <tbody id="user-list">
 
                     @foreach ($users as $user)
 
@@ -138,29 +138,28 @@
     <script>
 
     $( document ).ready(function() {
-        console.log('ok');
 
         $('#input-search').on('input',function(){
-            //$('#user-search').submit();
-           console.log("ok");
+            $search = $('#input-search').val();
+            if ($search == "" || $search == ' '){
+                $search = "all";
+            }
+
+            $.get('http://localhost:8888/user-ajax/'+$search, function(data){
+
+                $('#user-list').empty();
+                for (i = 0; i < data.length; i++) {
+                    $('#user-list').append(
+                            "<tr><td class='table-text'><div>" + data[i].firstname + "</div></td><td class='table-text'><div>" + data[i].lastname + "</div></td><td class='table-text'><input type='radio' name='user_id' value='"+ data[i].id + "' /></td></tr>')");
+
+                }
+
+
+
+            })
+
         });
 
-        //Script for the user search
-        $('#user-search').submit(function( event ) {
-            event.preventDefault();
-            $.ajax({
-                url: 'http://localhost:8888/myAjaxCallURI',
-                type: 'post',
-                data: $('form').serialize(), // Remember that you need to have your csrf token included
-                dataType: 'json',
-                success: function( _response ){
-                    // Handle your response..
-                },
-                error: function( _response ){
-                    // Handle error
-                }
-            });
-        });
     });
 
 

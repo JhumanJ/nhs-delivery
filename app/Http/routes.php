@@ -46,4 +46,11 @@ Route::group(['middleware' => ['web']], function () {
 
     //Route::delete('/delivery/{task}', 'DeliveryController@destroy');
 
+    //--------AJAX--------
+    Route::get('/user-ajax/{search}', [
+        'middleware' => 'receptionnist',
+        'uses' => 'UserController@userAjax'
+    ]);
+
+
 });
