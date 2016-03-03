@@ -84,7 +84,13 @@
                         </div>
 
 
-
+                    <form id="user-search" class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}">
+                        <label class="col-md-4 control-label">Search for User: </label>
+                        <div class="input-group col-md-6">
+                          <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-user"></i></span>
+                          <input type="text" id="input-search" class="form-control" placeholder="First name, last name, department..." aria-describedby="sizing-addon2">
+                        </div>
+                    </form>
 
                     <table class="table table-striped delivery-table {{ $errors->has('user_id') ? ' has-error' : '' }}">
 
@@ -129,5 +135,35 @@
         </div>
     </div>
 
+    <script>
 
+    $( document ).ready(function() {
+        console.log('ok');
+
+        $('#input-search').on('input',function(){
+            //$('#user-search').submit();
+           console.log("ok");
+        });
+
+        //Script for the user search
+        $('#user-search').submit(function( event ) {
+            event.preventDefault();
+            $.ajax({
+                url: 'http://localhost:8888/myAjaxCallURI',
+                type: 'post',
+                data: $('form').serialize(), // Remember that you need to have your csrf token included
+                dataType: 'json',
+                success: function( _response ){
+                    // Handle your response..
+                },
+                error: function( _response ){
+                    // Handle error
+                }
+            });
+        });
+    });
+
+
+
+    </script>
 @endsection
