@@ -7,20 +7,18 @@
 @section('content')
 
     <!-- Bootstrap Boilerplate... -->
-    <div class="row">
-    <div class="col-md-8 col-md-offset-2">
 
     <div class="panel-body">
         <!-- Display Validation Errors -->
         @include('common.errors')
 
         @if (count($awaiting_deliveries) > 0)
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                     <i class="fa fa-clock-o"></i> Awaiting Deliveries
-                </div>
+            <div class="outer">
+                <div class="con">
+                     <div class="usertitle head"><i class="fa fa-clock-o"></i> Awaiting Deliveries</div>
 
-                <div class="panel-body">
+
+                <div class="text2">
                     <table class="table table-striped delivery-table">
 
                         <!-- Table Headings -->
@@ -60,17 +58,16 @@
                         </tbody>
                     </table>
                 </div>
-
+</div>
                 </div>
                 @endif
 
                  @if (count($past_deliveries) > 0)
-                 <div class="panel panel-default">
-                <div class="panel-heading">
-                     <i class="fa fa-check-circle"></i> Past Deliveries
-                </div>
+                 <div class="outer">
+                <div class="con">
+                    <div class="usertitle head"> <i class="fa fa-check-circle"></i> Past Deliveries</div>
 
-                <div class="panel-body">
+                <div class="text2">
                     <table class="table table-striped delivery-table">
 
                         <!-- Table Headings -->
@@ -114,16 +111,16 @@
                 </div>
                 </div>
                 </div>
-
+</div>
 
          @else
             @if (count($awaiting_deliveries) < 1)
-            <div class="container">
-                <div class="row">
+            <div class="outer">
+                <div class="con">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="panel panel-default">
 
-                            <div class="panel-body">
+                            <div class="text2">
                                 You don't have any deliveries, either past or awaiting.
                             </div>
                         </div>

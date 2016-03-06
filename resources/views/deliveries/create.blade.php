@@ -7,11 +7,10 @@
 @section('content')
 
     <!-- Bootstrap Boilerplate... -->
-    <div class="container">
-        <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
-             <div class="panel-heading">Add Delivery</div>
+    <div class="outer">
+        <div class="con">
+             <div class="usertitle head" style="margin-left:20px">Add Delivery</div>
+             <div class="text2">
             <div class="panel-body">
                 <!-- Display Validation Errors -->
                 @include('common.errors')
@@ -129,7 +128,7 @@
                       </tbody>
                     </table>
                 </form>
-            </div>
+
         </div>
         </div>
         </div>

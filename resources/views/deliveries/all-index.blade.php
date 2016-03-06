@@ -7,20 +7,20 @@
 @section('content')
 
     <!-- Bootstrap Boilerplate... -->
-    <div class="row">
-    <div class="col-md-8 col-md-offset-2">
 
     <div class="panel-body">
-        <!-- Display Validation Errors -->
+
+
+              <!-- Display Validation Errors -->
         @include('common.errors')
 
         @if (count($awaiting_deliveries) > 0)
-            <div class="panel panel-default">
-                <div class="panel-heading">
+        <div class="outer">
+        <div class="con">
+                <div class="usertitle head">
                      <i class="fa fa-clock-o"></i> Awaiting Deliveries
                 </div>
-
-                <div class="panel-body">
+                <div class="text2">
                     <table class="table table-striped delivery-table">
 
                         <!-- Table Headings -->
@@ -80,17 +80,18 @@
                         </tbody>
                     </table>
                 </div>
+</div></div>
 
-                </div>
                 @endif
 
                  @if (count($past_deliveries) > 0)
-                 <div class="panel panel-default">
-                <div class="panel-heading">
+                 <div class="outer">
+                 <div class="con">
+                <div class="usertitle head">
                      <i class="fa fa-check-circle"></i> Past Deliveries
                 </div>
 
-                <div class="panel-body">
+                <div class="text2">
                     <table class="table table-striped delivery-table">
 
                         <!-- Table Headings -->
@@ -136,11 +137,9 @@
                         @endforeach
                         </tbody>
                     </table>
+              
                 </div>
-
-                </div>
-                </div>
-                </div>
+              </div></div>
 
              @endif
 
@@ -148,13 +147,13 @@
             @if (Auth::user()->isAdmin())
                 @if (count($cancelled_deliveries) > 0)
 
-
-                 <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="outer">
+                <div class="con">
+                <div class="usertitle head">
                      <i class="fa fa-times-circle-o"></i> Cancelled Deliveries
                 </div>
 
-                <div class="panel-body">
+                <div class="text2">
                     <table class="table table-striped delivery-table">
 
                         <!-- Table Headings -->
@@ -208,7 +207,7 @@
 
                 </div>
                 </div>
-                </div>
+              </div></div>
 
             @endif
          @else
@@ -229,4 +228,6 @@
             @endif
             @endif
          @endif
+
+       </div>
 @endsection
