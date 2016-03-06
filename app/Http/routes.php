@@ -69,8 +69,6 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'DeliveryController@edit'
     ]);
 
-
-
     //--------AJAX--------
 
     //Search for user when add package
