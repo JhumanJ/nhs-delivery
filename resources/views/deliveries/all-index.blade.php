@@ -10,9 +10,48 @@
     <div class="row">
     <div class="col-md-8 col-md-offset-2">
 
-    <div class="panel-body">
+
         <!-- Display Validation Errors -->
         @include('common.errors')
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Edit Delivery</h4>
+              </div>
+              <form method="POST" role="form" action="{{ url('/edit') }}">
+              <div class="modal-body">
+                  <div class="form-group">
+                    <label for="recipient-name" class="control-label">Reference:</label>
+                    <input type="text" class="form-control" name="reference" id="modalReference">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="control-label">Description:</label>
+                    <input type="text" class="form-control" name="description" id="modalDescription">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="control-label">Size:</label>
+                    <input type="text" class="form-control" name="size" id="modalSize">
+                  </div>
+                    <div class="form-group">
+                    <label for="recipient-name" class="control-label">Weight:</label>
+                    <input type="text" class="form-control" name="weight" id="modalWeight">
+                  </div>
+
+                  <input type="hidden" class="form-control" name="id" id="modalId"></imput>
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
 
         @if (count($awaiting_deliveries) > 0)
             <div class="panel panel-default">
@@ -62,15 +101,25 @@
                                     </td>
 
                                      <td class="table-text">
-                                        <button type="button" class="btn btn-primary btn-sm center-block"><i class="fa fa-pencil"></i> Edit</button>
+                                        <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#editModal" data-reference="{{$delivery->reference}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-id="{{$delivery->deliveryId}}"><i class="fa fa-pencil"></i> Edit</button>
                                     </td>
 
                                      <td class="table-text">
-                                        <button type="button" class="btn btn-warning btn-sm center-block"><i class="fa fa-archive"></i> Collect</button>
+                                        <form action="{{ url('collect/'.$delivery->deliveryId) }}" method="POST">
+                                            {!! csrf_field() !!}
+
+                                             <button type="submit" class="btn btn-warning btn-sm center-block"><i class="fa fa-archive"></i> Collect</button>
+
+                                        </form>
                                     </td>
 
                                      <td class="table-text">
-                                        <button type="button" class="btn btn-danger btn-sm center-block"><i class="fa fa-times"></i> Cancel</button>
+                                        <form action="{{ url('cancel/'.$delivery->deliveryId) }}" method="POST">
+                                            {!! csrf_field() !!}
+
+                                             <button type="submit" class="btn btn-danger btn-sm center-block"><i class="fa fa-times"></i> Cancel</button>
+
+                                        </form>
                                     </td>
 
 
@@ -139,8 +188,8 @@
                 </div>
 
                 </div>
-                </div>
-                </div>
+
+
 
              @endif
 
@@ -195,7 +244,14 @@
                                     </td>
 
                                     <td class="table-text">
-                                        <button type="button" class="btn btn-danger btn-sm center-block"><i class="fa fa-trash"></i> Delete</button>
+                                        <form action="{{ url('delete/'.$delivery->deliveryId) }}" method="POST">
+                                            {!! csrf_field() !!}
+                                            {!! method_field('DELETE') !!}
+
+
+                                             <button type="submit" class="btn btn-danger btn-sm center-block"><i class="fa fa-trash"></i> Delete</button>
+
+                                        </form>
                                     </td>
 
 
@@ -229,4 +285,27 @@
             @endif
             @endif
          @endif
+
+         <script>
+            $('#editModal').on('show.bs.modal', function (event) {
+                  var button = $(event.relatedTarget); // Button that triggered the modal
+                  var recipient = button.data('reference'); // Extract info from data-* attributes
+                  var modal = $(this);
+                  modal.find('.modal-title').text('Edit delivery: ' + recipient);
+                  modal.find('.modal-body #modalReference').val(recipient);
+
+                  recipient = button.data('description');
+                   modal.find('.modal-body #modalDescription').val(recipient);
+
+                   recipient = button.data('size');
+                   modal.find('.modal-body #modalSize').val(recipient);
+
+                   recipient = button.data('weight');
+                   modal.find('.modal-body #modalWeight').val(recipient);
+
+                   recipient = button.data('id');
+                   modal.find('.modal-body #modalId').val(recipient);
+            })
+        </script>
+
 @endsection

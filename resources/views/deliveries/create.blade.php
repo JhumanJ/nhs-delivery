@@ -139,13 +139,16 @@
 
     $( document ).ready(function() {
 
+
+
+
         $('#input-search').on('input',function(){
             $search = $('#input-search').val();
             if ($search == "" || $search == ' '){
                 $search = "all";
             }
 
-            $.get('http://localhost:8888/search/user/'+$search, function(data){
+            $.get('search/user/'+$search, function(data){
 
                 $('#user-list').empty();
                 for (i = 0; i < data.length; i++) {

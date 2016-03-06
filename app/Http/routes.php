@@ -30,8 +30,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
 
-    Route::get('/create','UserController@addDelivery');
 
+    Route::get('/create','UserController@addDelivery');
 
     Route::get('/deliveries', 'DeliveryController@index');
     //post needs a formular
@@ -44,7 +44,32 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'DeliveryController@indexAll'
     ]);
 
-    //Route::delete('/delivery/{task}', 'DeliveryController@destroy');
+    //---Manage deliveries---
+
+    Route::delete('/delete/{delivery}', [
+        'as' => 'delete',
+        'middleware' => 'admin',
+        'uses' => 'DeliveryController@destroy'
+    ]);
+
+    Route::post('/cancel/{delivery}', [
+        'as' => 'cancel',
+        'middleware' => 'receptionnist',
+        'uses' => 'DeliveryController@cancel'
+    ]);
+
+    Route::post('/collect/{delivery}', [
+        'as' => 'collect',
+        'middleware' => 'receptionnist',
+        'uses' => 'DeliveryController@collect'
+    ]);
+
+    Route::post('/edit', [
+        'middleware' => 'receptionnist',
+        'uses' => 'DeliveryController@edit'
+    ]);
+
+
 
     //--------AJAX--------
 
@@ -59,6 +84,7 @@ Route::group(['middleware' => ['web']], function () {
         'middleware' => 'auth',
         'uses' => 'DeliveryController@indexSearchAjax'
     ]);
+
 
 
 });

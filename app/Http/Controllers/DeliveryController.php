@@ -83,16 +83,19 @@ class DeliveryController extends Controller
         $awaiting_deliveries = Delivery::where('deliveries.status', 1)
                     ->orderBy('deliveries.updated_at', 'desc')
                     ->join('users', 'users.id', '=', 'user_id')
+                    ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
                     ->get();
 
         $past_deliveries = Delivery::where('deliveries.status', 2)
                     ->orderBy('deliveries.updated_at', 'desc')
                     ->join('users', 'users.id', '=', 'user_id')
+                    ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
                     ->get();;
 
         $cancelled_deliveries = Delivery::where('deliveries.status', 0)
             ->orderBy('deliveries.updated_at', 'desc')
             ->join('users', 'users.id', '=', 'user_id')
+            ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
             ->get();;
 
         return view('deliveries.all-index', [
@@ -127,8 +130,11 @@ class DeliveryController extends Controller
                 $array['description']   =$delivery->description;
                 $array['size']          =$delivery->size;
                 $array['weight']        =$delivery->weight;
+                $array['status']        =$delivery->status;
 
-                array_push($result,$array);
+                if($delivery->user_id==$request->user()->id) {
+                    array_push($result, $array);
+                }
             }
         } else if($search == "all"){
             $deliveries = DB::table('deliveries')->where('user_id',$request->user()->id)
@@ -142,13 +148,58 @@ class DeliveryController extends Controller
                 $array['description']   =$delivery->description;
                 $array['size']          =$delivery->size;
                 $array['weight']        =$delivery->weight;
+                $array['status']        =$delivery->status;
 
-                array_push($result,$array);
+                if($delivery->user_id==$request->user()->id) {
+                    array_push($result, $array);
+                }
             }
         }
 
 
         return response()->json($result);
+    }
+
+    public function destroy(Request $request, $delivery)
+    {
+        DB::table('deliveries')->where('id',$delivery)->delete();
+        return redirect('/deliveries-all');
+    }
+
+    public function cancel(Request $request, $delivery) {
+        DB:DB::table('deliveries')
+            ->where('id', $delivery)
+            ->update(['status' => 0, 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]);
+        return redirect('/deliveries-all');
+    }
+
+    public function collect(Request $request, $delivery) {
+        DB:DB::table('deliveries')
+            ->where('id', $delivery)
+            ->update(['status' => 2, 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]);
+        return redirect('/deliveries-all');
+    }
+
+    public function edit(Request $request) {
+        $this->validate($request, [
+            'id'          => 'required',
+            'reference'   => 'required|max:255',
+            'description' => 'required|max:255',
+            'size'        => 'required|max:255',
+            'weight'      => 'required|max:255',
+        ]);
+
+        DB:DB::table('deliveries')
+            ->where('id', $request->id)
+            ->update([
+                    'reference'    => $request->reference,
+                    'description'  => $request->description,
+                    'size'         => $request->size,
+                    'weight'       => $request->weight,
+                    'updated_at'   => \Carbon\Carbon::now()->toDateTimeString()]);
+        return redirect('/deliveries-all');
+
+
     }
 
 
