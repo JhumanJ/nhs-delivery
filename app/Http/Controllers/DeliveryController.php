@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Delivery;
 use Illuminate\Http\Request;
-
 use DB;
+
+use Image;
+
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +59,7 @@ class DeliveryController extends Controller
             'description' => 'required|max:255',
             'size'        => 'required|max:255',
             'weight'      => 'required|max:255',
+            'image'       => 'required',
         ]);
 
         //default status is awaiting
@@ -63,19 +67,32 @@ class DeliveryController extends Controller
         $request->created_at = \Carbon\Carbon::now()->toDateTimeString();
         $request->updated_at = \Carbon\Carbon::now()->toDateTimeString();
 
-        DB::table('deliveries')->insert([
-            'user_id'     => $request->user_id,
-            'status'      => $request->status,
-            'reference'   => $request->reference,
-            'description' => $request->description,
-            'size'        => $request->size,
-            'weight'      => $request->weight,
-            'created_at'  => $request->created_at,
-            'updated_at'  => $request->updated_at,
-        ]);
+//        $id = DB::table('deliveries')->insertGetId([
+//            'user_id'     => $request->user_id,
+//            'status'      => $request->status,
+//            'reference'   => $request->reference,
+//            'description' => $request->description,
+//            'size'        => $request->size,
+//            'weight'      => $request->weight,
+//            'created_at'  => $request->created_at,
+//            'updated_at'  => $request->updated_at,
+//        ]);
 
-        return redirect('/deliveries-all');
+//        if ($request->hasFile('picture')) {
+//            if ($request->file('picture')->isValid()) {
+//                $request->file('picture')->move('/public/img/deliveries/', $id.'.jpg');
+//            }
+//        }
+        dd($request->all());
+        //$imageName =  'test.'.$request->file('image')->getClientOriginalExtension();
+
+        //$request->file('image')->move(base_path().'/public/img/', $imageName);
+
+        //Image::make($request->input('picture'))->save($filename);
+        //echo 'success '.$id;
+        //return redirect('/deliveries-all');
     }
+
 
     //return all deliveries
     public function indexAll(Request $request) {

@@ -34,7 +34,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/create','UserController@addDelivery');
 
     Route::get('/deliveries', 'DeliveryController@index');
-    //post needs a formular
+
+    //create delivery
     Route::post('/delivery', [
         'middleware' => 'receptionnist',
         'uses' => 'DeliveryController@store'
