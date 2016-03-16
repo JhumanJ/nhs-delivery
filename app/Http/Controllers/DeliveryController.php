@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Delivery;
 use Illuminate\Http\Request;
 use DB;
-
+use Symfony\Component\Console\Input\Input;
 use Image;
 
 
@@ -78,12 +78,21 @@ class DeliveryController extends Controller
 //            'updated_at'  => $request->updated_at,
 //        ]);
 
-//        if ($request->hasFile('picture')) {
-//            if ($request->file('picture')->isValid()) {
-//                $request->file('picture')->move('/public/img/deliveries/', $id.'.jpg');
+        $file = array('image' => Input::file('image'));
+        $file->move('/nhsdelivery/img/deliveries/test.jpg');
+
+//        if ($request->hasFile('image')) {
+//            if ($request->file('image')->isValid()) {
+//                $request->file('image')->move('/nhsdelivery/img/deliveries/test.jpg');
 //            }
+//        } else {
+//            echo 'error: </br>';
+//            dd($request->all());
+//            echo "<pre>";
+//            print_r($_FILES);
+//            echo '</pre>';
 //        }
-        dd($request->all());
+
         //$imageName =  'test.'.$request->file('image')->getClientOriginalExtension();
 
         //$request->file('image')->move(base_path().'/public/img/', $imageName);
