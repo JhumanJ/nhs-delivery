@@ -16,7 +16,7 @@
                 <!-- Display Validation Errors -->
                 @include('common.errors')
 
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}">
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}" files="true" enctype="multipart/form-data">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('reference') ? ' has-error' : '' }}">
@@ -76,13 +76,23 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-md-4 control-label">Picture: </label>
+                            <div class="col-md-6">
+                                <input id="imgInput" type="file" class="form-control" name="image">
+
+                                 <img class="img-thumbnail center-block size150" id="blah" src="#" alt="your image" />
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                        <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-plus"></i>Add Package
                                 </button>
                             </div>
                         </div>
-
 
 
                         <label class="col-md-4 control-label">Search for User: </label>
@@ -126,7 +136,7 @@
                             </tr>
 
                     @endforeach
-                      </tbody>
+                        </tbody>
                     </table>
                 </form>
             </div>
@@ -139,8 +149,7 @@
 
     $( document ).ready(function() {
 
-
-
+        $('#blah').hide();
 
         $('#input-search').on('input',function(){
             $search = $('#input-search').val();
@@ -161,6 +170,24 @@
 
             })
 
+        });
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+
+        $("#imgInput").change(function(){
+            readURL(this);
+            $('#blah').show();
         });
 
     });

@@ -34,7 +34,14 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/create','UserController@addDelivery');
 
     Route::get('/deliveries', 'DeliveryController@index');
-    //post needs a formular
+
+    //img
+    Route::get('/image/delivery/{id}', ['middleware' => 'auth', function($id) {
+        $img = Image::make(public_path().'/img/deliveries/'.$id.'.jpg');
+        return $img->response('jpg');
+    }]);
+
+    //create delivery
     Route::post('/delivery', [
         'middleware' => 'receptionnist',
         'uses' => 'DeliveryController@store'
@@ -68,8 +75,6 @@ Route::group(['middleware' => ['web']], function () {
         'middleware' => 'receptionnist',
         'uses' => 'DeliveryController@edit'
     ]);
-
-
 
     //--------AJAX--------
 

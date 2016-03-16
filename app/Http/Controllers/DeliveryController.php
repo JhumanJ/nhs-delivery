@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Delivery;
 use Illuminate\Http\Request;
-
 use DB;
+use Image;
+
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class DeliveryController extends Controller
 {
@@ -56,6 +59,7 @@ class DeliveryController extends Controller
             'description' => 'required|max:255',
             'size'        => 'required|max:255',
             'weight'      => 'required|max:255',
+            'image'       => 'required|image',
         ]);
 
         //default status is awaiting
@@ -63,7 +67,7 @@ class DeliveryController extends Controller
         $request->created_at = \Carbon\Carbon::now()->toDateTimeString();
         $request->updated_at = \Carbon\Carbon::now()->toDateTimeString();
 
-        DB::table('deliveries')->insert([
+        $id = DB::table('deliveries')->insertGetId([
             'user_id'     => $request->user_id,
             'status'      => $request->status,
             'reference'   => $request->reference,
@@ -74,8 +78,18 @@ class DeliveryController extends Controller
             'updated_at'  => $request->updated_at,
         ]);
 
+//        if ($request->hasFile('image')) {
+//            if ($request->file('image')->isValid()) {
+//                $request->file('image')->move(public_path().'/img/deliveries/',$id.'.jpg');
+//                return redirect('/deliveries-all');
+//            }
+//        }
+
+        Image::make($request->file('image'))->save(public_path().'/img/deliveries/'.$id.'.jpg',60);
         return redirect('/deliveries-all');
+
     }
+
 
     //return all deliveries
     public function indexAll(Request $request) {
