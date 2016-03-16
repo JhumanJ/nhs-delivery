@@ -61,8 +61,9 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('deliveries') }}">My Deliveries</a></li>
+
                     @if (!Auth::guest())
+                        <li><a href="{{ url('deliveries') }}">My Deliveries</a></li>
                         @if (Auth::user()->isStaff())
                             <li><a href="{{ url('create') }}">Add Delivery</a></li>
                             <li><a href="{{ url('deliveries-all') }}">Manage Deliveries</a></li>
