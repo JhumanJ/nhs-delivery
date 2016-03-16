@@ -16,7 +16,7 @@
                 <!-- Display Validation Errors -->
                 @include('common.errors')
 
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}" files="true">
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}" files="true" enctype="multipart/form-data">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('reference') ? ' has-error' : '' }}">
@@ -78,7 +78,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Picture: </label>
                             <div class="col-md-6">
-                                <input id="imgInput" type="file" class="form-control" name="image" enctype="multipart/form-data">
+                                <input id="imgInput" type="file" class="form-control" name="image">
 
                                  <img class="img-thumbnail center-block size150" id="blah" src="#" alt="your image" />
                             </div>

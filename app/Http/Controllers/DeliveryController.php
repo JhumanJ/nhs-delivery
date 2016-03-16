@@ -78,20 +78,17 @@ class DeliveryController extends Controller
 //            'updated_at'  => $request->updated_at,
 //        ]);
 
-        $file = array('image' => Input::file('image'));
-        $file->move('/nhsdelivery/img/deliveries/test.jpg');
-
-//        if ($request->hasFile('image')) {
-//            if ($request->file('image')->isValid()) {
-//                $request->file('image')->move('/nhsdelivery/img/deliveries/test.jpg');
-//            }
-//        } else {
-//            echo 'error: </br>';
-//            dd($request->all());
-//            echo "<pre>";
-//            print_r($_FILES);
-//            echo '</pre>';
-//        }
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                $request->file('image')->move(public_path().'/img/deliveries/','test.jpg');
+            }
+        } else {
+            echo 'error: </br>';
+            dd($request->all());
+            echo "<pre>";
+            print_r($_FILES);
+            echo '</pre>';
+        }
 
         //$imageName =  'test.'.$request->file('image')->getClientOriginalExtension();
 
