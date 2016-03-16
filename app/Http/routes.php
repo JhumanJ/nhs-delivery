@@ -35,6 +35,12 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/deliveries', 'DeliveryController@index');
 
+    //img
+    Route::get('/image/delivery/{id}', ['middleware' => 'auth', function($id) {
+        $img = Image::make(public_path().'/img/deliveries/'.$id.'.jpg');
+        return $img->response('jpg');
+    }]);
+
     //create delivery
     Route::post('/delivery', [
         'middleware' => 'receptionnist',
