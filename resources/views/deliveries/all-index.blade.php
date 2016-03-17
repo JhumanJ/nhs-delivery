@@ -14,6 +14,27 @@
         <!-- Display Validation Errors -->
         @include('common.errors')
 
+        <!-- Signature modal-->
+        <div class="modal fade" id="signatureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalTitle">Collect </h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form action="{{ url('collect/') }}" method="POST">
+                            {!! csrf_field() !!}
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- View modal-->
         <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
@@ -173,12 +194,9 @@
                                     </td>
 
                                      <td class="table-text">
-                                        <form action="{{ url('collect/'.$delivery->deliveryId) }}" method="POST">
-                                            {!! csrf_field() !!}
 
-                                             <button type="submit" class="btn btn-warning btn-sm center-block"><i class="fa fa-archive"></i> Collect</button>
+                                             <button type="submit" class="btn btn-warning btn-sm center-block" data-toggle="modal" data-target="#signatureModal"><i class="fa fa-archive"></i> Collect</button>
 
-                                        </form>
                                     </td>
 
                                      <td class="table-text">
