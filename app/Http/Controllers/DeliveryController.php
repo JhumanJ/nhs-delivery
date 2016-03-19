@@ -140,6 +140,7 @@ class DeliveryController extends Controller
 
             $result = array();
             foreach ($deliveries as $delivery){
+                $array['id']            =$delivery->id;
                 $array['reference']     =$delivery->reference;
                 $array['description']   =$delivery->description;
                 $array['size']          =$delivery->size;
@@ -158,6 +159,7 @@ class DeliveryController extends Controller
 
             $result = array();
             foreach ($deliveries as $delivery){
+                $array['id']            =$delivery->id;
                 $array['reference']     =$delivery->reference;
                 $array['description']   =$delivery->description;
                 $array['size']          =$delivery->size;
@@ -188,6 +190,13 @@ class DeliveryController extends Controller
     }
 
     public function collect(Request $request, $delivery) {
+
+        $this->validate($request, [
+            'signature'     => 'required',
+        ]);
+
+        $signature = Image::make($request->signature)->save(public_path().'/img/signatures/'.$delivery.'.png',60);
+
         DB:DB::table('deliveries')
             ->where('id', $delivery)
             ->update(['status' => 2, 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]);

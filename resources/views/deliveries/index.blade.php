@@ -6,6 +6,8 @@
 
 @section('content')
 
+    <!-- Show active modal -->
+
     <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -59,6 +61,67 @@
         </div>
     </div>
 
+    <!-- Show past modal -->
+
+    <div class="modal fade" id="showPastModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalTitle">Delivery </h4>
+                </div>
+                    <div class="modal-body">
+
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-md-6 center-block col-sm-12">
+                                    <img class="img-thumbnail center-block size150" id="modalPicture" src="#" alt="Delivery Picture" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <strong><p class="col-md-6">Reference: </p></strong>
+                                    <p class="col-md-6" id="modalReference"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <strong><p class="col-md-6">Description: </p></strong>
+                                    <p class="col-md-6" id="modalDescription"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <strong><p class="col-md-6">Size: </p></strong>
+                                    <p class="col-md-6" id="modalSize"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <strong><p class="col-md-6">Weight: </p></strong>
+                                    <p class="col-md-6" id="modalWeight"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 center-block col-sm-12">
+                                    <img class="center-block smaller-signature" id="modalSignature" src="#" alt="Delivery Picture" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
 
     <div class="row">
     <div class="container">
@@ -84,7 +147,7 @@
                      </div>
                 @endif
 
-                @if (count($awaiting_deliveries) > 0)
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                              <i class="fa fa-clock-o"></i> Awaiting Deliveries
@@ -126,7 +189,7 @@
                                             </td>
 
                                             <td class="table-text">
-                                                <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->id.'') }}"><i class="fa fa-search"></i> Details</button>
+                                                <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->id.'') }}" ><i class="fa fa-search"></i> Details</button>
                                             </td>
 
 
@@ -136,7 +199,7 @@
                                 </tbody>
                             </table>
                             @else
-                                <div class="awaiting-text">No awatiting deliveries at the moment.</div>
+                                <div class="awaiting-text">No awaiting deliveries at the moment.</div>
                             @endif
                         </div>
 
@@ -186,7 +249,7 @@
                                             </td>
 
                                             <td class="table-text">
-                                                <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->id.'') }}"><i class="fa fa-search"></i> Details</button>
+                                                <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showPastModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->id.'') }}" data-srcSignature="{{ url('/image/signature/'.$delivery->id.'') }}"><i class="fa fa-search"></i> Details</button>
                                             </td>
 
 
@@ -206,7 +269,7 @@
 
 
 
-                 @endif
+
 
                  <script>
 
@@ -228,10 +291,19 @@
                                 $('#past-delivery-list').empty();
                                 for (i = 0; i < data.length; i++) {
                                     if (data[i].status ==1){
-                                        $('#awaiting-delivery-list').append('<tr><td class="table-text"><div>'+ data[i].reference + '</div></td><td class="table-text"><div>'+ data[i].description +'</div></td><td class="table-text"><div>'+ data[i].size +'</div></td><td class="table-text"><div>'+ data[i].weight +'</div></td></tr>');
+                                        $toAppend = '<tr><td class="table-text"><div>'+ data[i].reference + '</div></td><td class="table-text"><div>'+ data[i].description +'</div></td><td class="table-text"><div>'+ data[i].size +'</div></td><td class="table-text"><div>'+ data[i].weight +'</div></td>';
+                                        $toAppend = $toAppend + '<td><button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="'+data[i].reference+'" data-description="'+data[i].description+'" data-size="'+data[i].size+'" data-weight="'+data[i].weight+'" data-src="/image/delivery/'+ data[i].id + ' " ><i class="fa fa-search"></i> Details</button></td>';
+                                        $toAppend = $toAppend +'</tr>';
+                                        $('#awaiting-delivery-list').append($toAppend);
                                     }
                                     if(data[i].status ==2){
-                                        $('#past-delivery-list').append('<tr><td class="table-text"><div>'+ data[i].reference + '</div></td><td class="table-text"><div>'+ data[i].description +'</div></td><td class="table-text"><div>'+ data[i].size +'</div></td><td class="table-text"><div>'+ data[i].weight +'</div></td></tr>');
+                                        $toAppend = '<tr><td class="table-text"><div>'+ data[i].reference + '</div></td><td class="table-text"><div>'+ data[i].description +'</div></td><td class="table-text"><div>'+ data[i].size +'</div></td><td class="table-text"><div>'+ data[i].weight +'</div></td>';
+                                        $toAppend = $toAppend + '<td><button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showPastModal" data-reference="'+data[i].reference+'" data-description="'+data[i].description+'" data-size="'+data[i].size+'" data-weight="'+data[i].weight+'" data-src="/image/delivery/'+ data[i].id + '" data-srcsignature="/image/signature/'+data[i].id+' " ><i class="fa fa-search"></i> Details</button>';
+                                        $toAppend = $toAppend +'</td></tr>';
+
+                                        console.log($toAppend);
+
+                                        $('#past-delivery-list').append($toAppend);
                                     }
 
                                 }
@@ -244,11 +316,8 @@
                             var button = $(event.relatedTarget); // Button that triggered the modal
                             var recipient = button.data('reference'); // Extract info from data-* attributes
                             var modal = $(this);
-                            if (button.data('status')==1) {
-                                modal.find('.modal-title').text('Delivery: ' + recipient);
-                            } else {
-                                modal.find('.modal-title').text('Past Delivery: ' + recipient);
-                            }
+
+                            modal.find('.modal-title').text('Delivery: ' + recipient);
 
                             modal.find('.modal-body #modalReference').text(recipient);
 
@@ -263,6 +332,32 @@
 
                             recipient = button.data('src');
                             modal.find('.modal-body #modalPicture').attr("src", recipient);
+
+                        })
+
+                        $('#showPastModal').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget); // Button that triggered the modal
+                            var recipient = button.data('reference'); // Extract info from data-* attributes
+                            var modal = $(this);
+
+                            modal.find('.modal-title').text('Past Delivery: ' + recipient);
+
+                            modal.find('.modal-body #modalReference').text(recipient);
+
+                            recipient = button.data('description');
+                            modal.find('.modal-body #modalDescription').text(recipient);
+
+                            recipient = button.data('size');
+                            modal.find('.modal-body #modalSize').text(recipient);
+
+                            recipient = button.data('weight');
+                            modal.find('.modal-body #modalWeight').text(recipient);
+
+                            recipient = button.data('src');
+                            modal.find('.modal-body #modalPicture').attr("src", recipient);
+
+                            recipient = button.data('srcsignature');
+                            modal.find('.modal-body #modalSignature').attr("src", recipient);
 
                         })
 

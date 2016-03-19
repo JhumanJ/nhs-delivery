@@ -4,3 +4,13 @@
 .size150 {
     height: 250px;
 }
+
+.height-250 {
+    height: 250px;
+    width: 100%;
+}
+
+.smaller-signature {
+    width: 50%;
+}
+

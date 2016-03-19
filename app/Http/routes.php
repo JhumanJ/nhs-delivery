@@ -41,6 +41,11 @@ Route::group(['middleware' => ['web']], function () {
         return $img->response('jpg');
     }]);
 
+    Route::get('/image/signature/{id}', ['middleware' => 'auth', function($id) {
+        $img = Image::make(public_path().'/img/signatures/'.$id.'.png');
+        return $img->response('png');
+    }]);
+
     //create delivery
     Route::post('/delivery', [
         'middleware' => 'receptionnist',

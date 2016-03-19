@@ -1,6 +1,6 @@
 
 
-<!-- resources/views/deliveries/index.blade.php -->
+<!-- resources/views/deliveries/create.blade.php -->
 
 @extends('layouts.app')
 
