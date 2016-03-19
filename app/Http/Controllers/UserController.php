@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
 
     public function __construct(){
-        $this->middleware('receptionnist');
+        $this->middleware('auth');
     }
 
 
@@ -68,6 +69,41 @@ class UserController extends Controller
 
 
         return response()->json($result);
+    }
+
+    public function getProfile(Request $request) {
+        $user = $request->user();
+
+        return view('user.profile', [
+            'user' => $user,
+        ]);
+    }
+
+    public function updateProfile(Request $request) {
+        $user = $request->user();
+
+        $this->validate($request, [
+            'firstName' => 'required|max:255',
+            'lastName' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|max:20',
+            'primaryLocation' => 'required|max:255',
+            'department' => 'required|max:255'
+        ]);
+
+        $user->firstName = $request->firstName;
+        $user->lastName = $request->lastName;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->department = $request->department;
+        $user->primaryLocation = $request->primaryLocation;
+
+
+        $user->save();
+
+        return view('user.profile', [
+            'user' => $user,
+        ]);
     }
 
 }

@@ -30,7 +30,6 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
 
-
     Route::get('/create','UserController@addDelivery');
 
     Route::get('/deliveries', 'DeliveryController@index');
@@ -46,11 +45,24 @@ Route::group(['middleware' => ['web']], function () {
         return $img->response('png');
     }]);
 
+    //profile routes
+    Route::get('/profile', [
+        'middleware' => 'auth',
+        'uses' => 'UserController@getProfile'
+    ]);
+
+    Route::post('/profile', [
+        'middleware' => 'auth',
+        'uses' => 'UserController@updateProfile'
+    ]);
+
+
     //create delivery
     Route::post('/delivery', [
         'middleware' => 'receptionnist',
         'uses' => 'DeliveryController@store'
     ]);
+
     Route::get('/deliveries-all', [
         'middleware' => 'receptionnist',
         'uses' => 'DeliveryController@indexAll'
