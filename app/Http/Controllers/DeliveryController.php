@@ -82,14 +82,14 @@ class DeliveryController extends Controller
 
         Image::make($request->file('image'))->save(storage_path().'/app/public/img/deliveries/'.$id.'.jpg',60);
 
-        $user = User::find($request->user_id);
-        $delivery = Delivery::find($id);
-
-        Mail::send('emails.new', ['user' => $user, 'delivery' => $delivery], function ($m) use ($user) {
-            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
-
-            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package waiting at Reception');
-        });
+//        $user = User::find($request->user_id);
+//        $delivery = Delivery::find($id);
+//
+//        Mail::send('emails.new', ['user' => $user, 'delivery' => $delivery], function ($m) use ($user) {
+//            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
+//
+//            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package waiting at Reception');
+//        });
 
         return redirect('/deliveries-all');
 
@@ -191,15 +191,15 @@ class DeliveryController extends Controller
         DB::table('deliveries')
             ->where('id', $delivery)
             ->update(['status' => 0, 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]);
-
-        $deliveryToCancel = Delivery::find($delivery);
-        $user = User::find($deliveryToCancel->user_id);
-
-        Mail::send('emails.cancel', ['user' => $user, 'delivery' => $deliveryToCancel], function ($m) use ($user) {
-            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
-
-            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Cancelled');
-        });
+//
+//        $deliveryToCancel = Delivery::find($delivery);
+//        $user = User::find($deliveryToCancel->user_id);
+//
+//        Mail::send('emails.cancel', ['user' => $user, 'delivery' => $deliveryToCancel], function ($m) use ($user) {
+//            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
+//
+//            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Cancelled');
+//        });
 
         return redirect('/deliveries-all');
     }
@@ -219,14 +219,14 @@ class DeliveryController extends Controller
             ->where('id', $delivery)
             ->update(['status' => 2, 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]);
 
-        $deliveryToCollect = Delivery::find($delivery);
-        $user = User::find($deliveryToCollect->user_id);
-
-        Mail::send('emails.collect', ['user' => $user, 'delivery' => $deliveryToCollect], function ($m) use ($user) {
-            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
-
-            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Collected');
-        });
+//        $deliveryToCollect = Delivery::find($delivery);
+//        $user = User::find($deliveryToCollect->user_id);
+//
+//        Mail::send('emails.collect', ['user' => $user, 'delivery' => $deliveryToCollect], function ($m) use ($user) {
+//            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
+//
+//            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Collected');
+//        });
 
         return redirect('/deliveries-all');
     }
@@ -249,14 +249,14 @@ class DeliveryController extends Controller
                     'weight'       => $request->weight,
                     'updated_at'   => \Carbon\Carbon::now()->toDateTimeString()]);
 
-        $deliveryToEdit = Delivery::find($request->id);
-        $user = User::find($deliveryToEdit->user_id);
-
-        Mail::send('emails.edit', ['user' => $user, 'delivery' => $deliveryToEdit], function ($m) use ($user) {
-            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
-
-            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Information Edited');
-        });
+//        $deliveryToEdit = Delivery::find($request->id);
+//        $user = User::find($deliveryToEdit->user_id);
+//
+//        Mail::send('emails.edit', ['user' => $user, 'delivery' => $deliveryToEdit], function ($m) use ($user) {
+//            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
+//
+//            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Information Edited');
+//        });
 
         return redirect('/deliveries-all');
 
