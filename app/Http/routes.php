@@ -30,18 +30,24 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
 
-    Route::get('/create','UserController@addDelivery');
+    Route::get('/create', [
+        'middleware' => 'receptionnist',
+        'uses' => 'UserController@addDelivery'
+    ]);
 
-    Route::get('/deliveries', 'DeliveryController@index');
+    Route::get('/deliveries', [
+        'middleware' => 'auth',
+        'uses' => 'DeliveryController@index'
+    ]);
 
     //img
     Route::get('/image/delivery/{id}', ['middleware' => 'auth', function($id) {
-        $img = Image::make(public_path().'/img/deliveries/'.$id.'.jpg');
+        $img = Image::make(storage_path().'/app/public/img/deliveries/'.$id.'.jpg');
         return $img->response('jpg');
     }]);
 
     Route::get('/image/signature/{id}', ['middleware' => 'auth', function($id) {
-        $img = Image::make(public_path().'/img/signatures/'.$id.'.png');
+        $img = Image::make(storage_path().'/app/public/img/signatures/'.$id.'.png');
         return $img->response('png');
     }]);
 
@@ -83,7 +89,6 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
     Route::post('/collect/{delivery}', [
-        'as' => 'collect',
         'middleware' => 'receptionnist',
         'uses' => 'DeliveryController@collect'
     ]);

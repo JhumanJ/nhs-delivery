@@ -102,41 +102,21 @@
                         </div>
 
 
-                    <table class="table table-striped delivery-table {{ $errors->has('user_id') ? ' has-error' : '' }}">
+                    <table id="userList" class="table table-striped delivery-table {{ $errors->has('user_id') ? ' has-error' : '' }}">
 
-                                <!-- Table Headings -->
-                                <thead>
-                                     <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Choose</th>
-                                </thead>
-
-
-                                <!-- Table Body -->
-                                <tbody id="user-list">
-
-                    @foreach ($users as $user)
-
-                            <tr class="{{ $errors->has('user_id') ? ' danger' : '' }}">
-                                <!-- Task Name -->
-                                <td class="table-text">
-                                    <div>{{ $user->firstName }}</div>
-                                </td>
-
-                                <td class="table-text">
-                                    <div>{{ $user->lastName }}</div>
-                                </td>
-
-                                <td class="table-text">
-                                    <input type="radio" name="user_id" value="{{ $user->id }}" />
-                                </td>
+                        <!-- Table Headings -->
+                        <thead>
+                             <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Choose</th>
+                        </thead>
 
 
+                        <!-- Table Body -->
+                        <tbody id="user-list">
 
-                            </tr>
-
-                    @endforeach
                         </tbody>
+
                     </table>
                 </form>
             </div>
@@ -149,26 +129,30 @@
 
     $( document ).ready(function() {
 
+        $('#userList').hide();
         $('#blah').hide();
 
         $('#input-search').on('input',function(){
             $search = $('#input-search').val();
+
             if ($search == "" || $search == ' '){
-                $search = "all";
+                $('#userList').hide();
+            } else {
+
+                $.get('search/user/'+$search, function(data){
+                    $('#userList').show();
+
+                    $('#user-list').empty();
+                    for (i = 0; i < data.length; i++) {
+                        $('#user-list').append(
+                                "<tr><td class='table-text'><div>" + data[i].firstname + "</div></td><td class='table-text'><div>" + data[i].lastname + "</div></td><td class='table-text'><input type='radio' name='user_id' value='"+ data[i].id + "' /></td></tr>')");
+
+                    }
+
+
+
+                })
             }
-
-            $.get('search/user/'+$search, function(data){
-
-                $('#user-list').empty();
-                for (i = 0; i < data.length; i++) {
-                    $('#user-list').append(
-                            "<tr><td class='table-text'><div>" + data[i].firstname + "</div></td><td class='table-text'><div>" + data[i].lastname + "</div></td><td class='table-text'><input type='radio' name='user_id' value='"+ data[i].id + "' /></td></tr>')");
-
-                }
-
-
-
-            })
 
         });
 

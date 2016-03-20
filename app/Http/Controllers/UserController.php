@@ -6,6 +6,7 @@ use DB;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Mail;
 
 class UserController extends Controller
 {

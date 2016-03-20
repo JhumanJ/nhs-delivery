@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Delivery;
+use App\User;
 use Illuminate\Http\Request;
 use DB;
 use Image;
+use Mail;
 
 
 use App\Http\Requests;
@@ -78,14 +80,17 @@ class DeliveryController extends Controller
             'updated_at'  => $request->updated_at,
         ]);
 
-//        if ($request->hasFile('image')) {
-//            if ($request->file('image')->isValid()) {
-//                $request->file('image')->move(public_path().'/img/deliveries/',$id.'.jpg');
-//                return redirect('/deliveries-all');
-//            }
-//        }
+        Image::make($request->file('image'))->save(storage_path().'/app/public/img/deliveries/'.$id.'.jpg',60);
 
-        Image::make($request->file('image'))->save(public_path().'/img/deliveries/'.$id.'.jpg',60);
+//        $user = User::find($request->user_id);
+//        $delivery = Delivery::find($id);
+//
+//        Mail::send('emails.new', ['user' => $user, 'delivery' => $delivery], function ($m) use ($user) {
+//            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
+//
+//            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package waiting at Reception');
+//        });
+
         return redirect('/deliveries-all');
 
     }
@@ -183,7 +188,7 @@ class DeliveryController extends Controller
     }
 
     public function cancel(Request $request, $delivery) {
-        DB:DB::table('deliveries')
+        DB::table('deliveries')
             ->where('id', $delivery)
             ->update(['status' => 0, 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]);
         return redirect('/deliveries-all');
@@ -195,11 +200,15 @@ class DeliveryController extends Controller
             'signature'     => 'required',
         ]);
 
-        $signature = Image::make($request->signature)->save(public_path().'/img/signatures/'.$delivery.'.png',60);
+        $image = $request->signature;
 
-        DB:DB::table('deliveries')
+        $image = Image::make($image)->save(storage_path().'/app/public/img/signatures/'.$delivery.'.png');
+
+
+        DB::table('deliveries')
             ->where('id', $delivery)
             ->update(['status' => 2, 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]);
+
         return redirect('/deliveries-all');
     }
 

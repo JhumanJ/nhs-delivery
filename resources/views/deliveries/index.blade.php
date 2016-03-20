@@ -123,18 +123,7 @@
     </div>
 
 
-    <div class="row">
-    <div class="container">
-        <div class="col-md-8 col-md-offset-2">
-            <form id="delivery-search" class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}">
-                <label class="col-md-4 control-label">Search for delivery: </label>
-                <div class="input-group col-md-6">
-                  <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-archive"></i></span>
-                  <input type="text" id="input-search" class="form-control" placeholder="Reference or description" aria-describedby="sizing-addon2" name="search">
-                </div>
-            </form>
-        </div>
-    </div>
+
 
     <div class="col-md-8 col-md-offset-2">
 
@@ -145,7 +134,17 @@
                         No deliveries yet.
                         </div>
                      </div>
-                @endif
+                @else
+
+                        <div class="marg-20-btm">
+                            <form id="delivery-search" class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}">
+                                <label class="col-md-4 control-label">Search for delivery: </label>
+                                <div class="input-group col-md-6">
+                                  <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-archive"></i></span>
+                                  <input type="text" id="input-search" class="form-control" placeholder="Reference or description" aria-describedby="sizing-addon2" name="search">
+                                </div>
+                            </form>
+                        </div>
 
 
                     <div class="panel panel-default">
@@ -365,5 +364,6 @@
 
                 </script>
 
+                @endif
 
 @endsection

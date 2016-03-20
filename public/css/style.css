@@ -14,3 +14,15 @@
     width: 50%;
 }
 
+.marg-20-btm {
+    margin-bottom: 20px;
+}
+
+body {
+    font-family: 'Lato';
+}
+
+.fa-btn {
+    margin-right: 6px;
+}
+
