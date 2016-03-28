@@ -1,0 +1,84 @@
+
+
+
+
+.cfix:after, .btn-list:after {
+  display: block;
+  content: '';
+  clear: both; }
+
+.wrapper {
+  width: 100%;
+  box-sizing: border-box;
+   background: radial-gradient(ellipse farthest-corner at center center, #fff 0%, #1cadca 100%);
+   overflow: scroll;
+   }
+
+.link-menu {
+  font-size: 2.2rem; }
+  .link-menu:hover {
+    color: #807d7d; }
+
+.main-content {
+  padding: 80px 40px 20px;
+  text-align: center; }
+  .main-content > .main-content-header {
+    padding-bottom: 80px; }
+  .main-content > .main-content-body {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-top: 1px solid #d4d4d4;
+    text-align: left; }
+    .main-content > .main-content-body a {
+      text-decoration: underline; }
+    .main-content > .main-content-body > .main-content-body-inner {
+      padding-top: 10px;
+      padding-bottom: 20px; }
+      .main-content > .main-content-body > .main-content-body-inner > h2 {
+        padding-left: 10px;
+        padding-right: 10px;
+        border-left: 12px solid #51648b;
+        color: #91a1b9;
+        font-size: 1.6rem; }
+      .main-content > .main-content-body > .main-content-body-inner > h2 + ul {
+        padding-left: 14px;
+        padding-right: 14px; }
+        .main-content > .main-content-body > .main-content-body-inner > h2 + ul > li + li {
+          padding-top: 20px; }
+      .main-content > .main-content-body > .main-content-body-inner h3 {
+        border-bottom: 1px solid #51648b; }
+
+.headline {
+  font-size: 4.0rem;
+  font-weight: 400;
+  color: #51648b; }
+
+.headline-main {
+  color: #535353; }
+
+.version {
+  padding-top: 0;
+  font-size: 1.4rem; }
+
+.btn-list {
+  display: inline-block;
+  text-align: center; }
+  .btn-list > li {
+    float: left; }
+  .btn-list > li + li {
+    padding-left: 10px; }
+
+
+.sidebar {
+  background-color: #FDF036; }
+  .sidebar li + li {
+    margin-top: 12px; }
+  .sidebar li a {
+    padding: 4px 10px;
+    display: block;
+    font-family: "Alleyn Bold";
+    color: #fff; }
+    .sidebar li a:hover {
+      background-color: #424242; }
+  .sidebar li .current {
+    background-color: #51648b; }
