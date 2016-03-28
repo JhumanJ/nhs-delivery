@@ -46,6 +46,11 @@ position: fixed;
 padding-bottom:-10px;
 }
 
+.modal-backdrop {
+  z-index: -1;
+  overflow: scroll;
+}
+
 .user {
   width: 90%;
   max-width: 340px;

@@ -34,13 +34,7 @@
     <link rel="stylesheet" href="/css/sidebar/css/sidebar.css" />
 
 
-    <style>
 
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
 
 </head>
 
@@ -50,55 +44,13 @@
 
 
 
-<nav class="sidebar jsc-sidebar" id="jsi-nav" data-sidebar-options="">
-<ul class="sidebar-list">
-  <!-- Collapsed Hamburger -->
-  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-      <span class="sr-only">Toggle Navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-  </button>
-
-  <!-- Branding Image -->
-
-</div>
-<nav>
-<div class="collapse navbar-collapse" id="app-navbar-collapse">
-  <!-- Left Side Of Navbar -->
-  <ul class="nav navbar-nav">
-
-    <p></p>
-    <li><a class="navbar-brand home" style="width:70px;height:63px" href="{{ url('/') }}">
-    </a></li><br>
-      @if (!Auth::guest())
-      <li><a class="collect" style="width:70px;height:63px" href="{{ url('deliveries') }}"></a></li><br>
-
-
-          @if (Auth::user()->isStaff())
-              <li><a class="add" style="width:76px;height:69px" href="{{ url('create') }}"></a></li><br>
-              <li><a class="delete" style="width:76px;height:69px" href="{{ url('deliveries-all') }}"></a></li><br>
-          @endif
-
-          <li><a class="logout" style="width:70px;height:63px" href="{{ url('/logout') }}"></a></li><br>
-      @endif
-  </ul>
-
-</ul>
-</nav>
 
 <div class="wrapper jsc-sidebar-content jsc-sidebar-pulled">
 
   <nav class="navbar navbar-default" role="navigation">
 
 
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-  </div>
+
   <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav navbar-left">
       <li><a href="#" class="icon-menu link-menu jsc-sidebar-trigger" style="color:#38B7D1"></a></li>
@@ -136,6 +88,39 @@
     @yield('content')
 
 </div>
+
+
+
+
+<nav class="sidebar jsc-sidebar" id="jsi-nav" data-sidebar-options="">
+<ul class="sidebar-list">
+
+
+  <!-- Branding Image -->
+
+<div class="collapse navbar-collapse" id="app-navbar-collapse">
+  <!-- Left Side Of Navbar -->
+  <ul class="nav navbar-nav">
+
+    <p></p>
+    <li><a class="navbar-brand home" style="width:70px;height:63px" href="{{ url('/') }}">
+    </a></li><br>
+      @if (!Auth::guest())
+      <li><a class="collect" style="width:70px;height:63px" href="{{ url('deliveries') }}"></a></li><br>
+
+
+          @if (Auth::user()->isStaff())
+              <li><a class="add" style="width:76px;height:69px" href="{{ url('create') }}"></a></li><br>
+              <li><a class="delete" style="width:76px;height:69px" href="{{ url('deliveries-all') }}"></a></li><br>
+          @endif
+
+          <li><a class="logout" style="width:70px;height:63px" href="{{ url('/logout') }}"></a></li><br>
+      @endif
+  </ul>
+
+</ul>
+</nav>
+
 
     		<script src="/css/sidebar/js/lib/jquery.min.js"></script>
 

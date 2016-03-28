@@ -12,6 +12,7 @@
   box-sizing: border-box;
    background: radial-gradient(ellipse farthest-corner at center center, #fff 0%, #1cadca 100%);
    overflow: scroll;
+   z-index: -1;
    }
 
 .link-menu {
