@@ -42,6 +42,34 @@
 <body id="app-layout">
 
 
+  <nav class="sidebar jsc-sidebar" id="jsi-nav" data-sidebar-options="">
+  <ul class="sidebar-list">
+
+
+    <!-- Branding Image -->
+
+  <div class="collapse navbar-collapse" id="app-navbar-collapse">
+    <!-- Left Side Of Navbar -->
+    <ul class="nav navbar-nav">
+
+      <p></p>
+      <li><a class="navbar-brand home" style="width:70px;height:63px" href="{{ url('/') }}">
+      </a></li><br>
+        @if (!Auth::guest())
+        <li><a class="collect" style="width:70px;height:63px" href="{{ url('deliveries') }}"></a></li><br>
+
+
+            @if (Auth::user()->isStaff())
+                <li><a class="add" style="width:76px;height:69px" href="{{ url('create') }}"></a></li><br>
+                <li><a class="delete" style="width:76px;height:69px" href="{{ url('deliveries-all') }}"></a></li><br>
+            @endif
+
+            <li><a class="logout" style="width:70px;height:63px" href="{{ url('/logout') }}"></a></li><br>
+        @endif
+    </ul>
+
+  </ul>
+  </nav>
 
 
 
@@ -92,34 +120,6 @@
 
 
 
-<nav class="sidebar jsc-sidebar" id="jsi-nav" data-sidebar-options="">
-<ul class="sidebar-list">
-
-
-  <!-- Branding Image -->
-
-<div class="collapse navbar-collapse" id="app-navbar-collapse">
-  <!-- Left Side Of Navbar -->
-  <ul class="nav navbar-nav">
-
-    <p></p>
-    <li><a class="navbar-brand home" style="width:70px;height:63px" href="{{ url('/') }}">
-    </a></li><br>
-      @if (!Auth::guest())
-      <li><a class="collect" style="width:70px;height:63px" href="{{ url('deliveries') }}"></a></li><br>
-
-
-          @if (Auth::user()->isStaff())
-              <li><a class="add" style="width:76px;height:69px" href="{{ url('create') }}"></a></li><br>
-              <li><a class="delete" style="width:76px;height:69px" href="{{ url('deliveries-all') }}"></a></li><br>
-          @endif
-
-          <li><a class="logout" style="width:70px;height:63px" href="{{ url('/logout') }}"></a></li><br>
-      @endif
-  </ul>
-
-</ul>
-</nav>
 
 
     		<script src="/css/sidebar/js/lib/jquery.min.js"></script>
