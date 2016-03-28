@@ -40,15 +40,17 @@ font-family: 'Alleyn Regular';
 }
 
 
-.navbar-fixed-top {
-  z-index:1000;
-position: fixed;
-padding-bottom:-10px;
-}
+
 
 .modal-backdrop {
-  z-index: -1;
+  z-index: 0;
   overflow: scroll;
+}
+
+body.modal-open {
+    height: auto;
+    position: relative;
+    overflow: scroll;
 }
 
 .user {

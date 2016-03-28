@@ -78,6 +78,13 @@
   <nav class="navbar navbar-default" role="navigation">
 
 
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
 
   <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav navbar-left">
@@ -90,8 +97,8 @@
 
       <!-- Authentication Links -->
                   @if (Auth::guest())
-                      <li><a href="{{ url('/login') }}">Login</a></li>
-                      <li><a href="{{ url('/register') }}">Register</a></li>
+                      <li><a style="color:#38B7D1" href="{{ url('/login') }}">Login</a></li>
+                      <li><a style="color:#38B7D1" href="{{ url('/register') }}">Register</a></li>
                   @else
                       <li class="dropdown">
                           <a href="#" style="color:#38B7D1" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -134,14 +141,7 @@
     				pushCb: function () { console.log('push'); }
     			});
 
-    			$('#api-push').on('click', function (e) {
-    				e.preventDefault();
-    				$('#jsi-nav').data('sidebar').push();
-    			});
-    			$('#api-pull').on('click', function (e) {
-    				e.preventDefault();
-    				$('#jsi-nav').data('sidebar').pull();
-    			});
+
     		</script>
 
 </body>
