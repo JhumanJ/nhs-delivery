@@ -36,113 +36,112 @@
 
 
 
-</head>
+  </head>
 
 
-<body id="app-layout">
+  <body id="app-layout">
 
 
-  <nav class="sidebar jsc-sidebar" id="jsi-nav" data-sidebar-options="">
-  <ul class="sidebar-list">
+    <nav class="sidebar jsc-sidebar" id="jsi-nav" data-sidebar-options="">
+    <ul class="sidebar-list">
 
 
-    <!-- Branding Image -->
+      <!-- Branding Image -->
 
-  <div class="collapse navbar-collapse" id="app-navbar-collapse">
-    <!-- Left Side Of Navbar -->
-    <ul class="nav navbar-nav">
+    <div class="collapse navbar-collapse" id="app-navbar-collapse">
+      <!-- Left Side Of Navbar -->
+      <ul class="nav navbar-nav">
 
-      <p></p>
-      <li><a class="navbar-brand home" style="width:70px;height:63px" href="{{ url('/') }}">
-      </a></li><br>
-        @if (!Auth::guest())
-        <li><a class="collect" style="width:70px;height:63px" href="{{ url('deliveries') }}"></a></li><br>
+        <p></p>
+        <li><a class="navbar-brand home" style="width:70px;height:63px" href="{{ url('/') }}">
+        </a></li><br>
+          @if (!Auth::guest())
+          <li><a class="collect" style="width:70px;height:63px" href="{{ url('deliveries') }}"></a></li><br>
 
 
-            @if (Auth::user()->isStaff())
-                <li><a class="add" style="width:76px;height:69px" href="{{ url('create') }}"></a></li><br>
-                <li><a class="delete" style="width:76px;height:69px" href="{{ url('deliveries-all') }}"></a></li><br>
-            @endif
+              @if (Auth::user()->isStaff())
+                  <li><a class="add" style="width:76px;height:69px" href="{{ url('create') }}"></a></li><br>
+                  <li><a class="delete" style="width:76px;height:69px" href="{{ url('deliveries-all') }}"></a></li><br>
+              @endif
 
-            <li><a class="logout" style="width:70px;height:63px" href="{{ url('/logout') }}"></a></li><br>
-        @endif
+              <li><a class="logout" style="width:70px;height:63px" href="{{ url('/logout') }}"></a></li><br>
+          @endif
+      </ul>
+
     </ul>
+    </nav>
 
-  </ul>
+
+
+  <div class="wrapper jsc-sidebar-content jsc-sidebar-pulled">
+
+    <nav class="navbar navbar-default" role="navigation">
+
+
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-left">
+        <li><a href="#" class="icon-menu link-menu jsc-sidebar-trigger" style="color:#38B7D1"></a></li>
+
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-right">
+
+        <!-- Authentication Links -->
+                    @if (Auth::guest())
+                        <li><a style="color:#38B7D1" href="{{ url('/login') }}">Login</a></li>
+                        <li><a style="color:#38B7D1" href="{{ url('/register') }}">Register</a></li>
+                    @else
+                        <li class="dropdown">
+                            <a href="#" style="color:#38B7D1" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ Auth::user()->getFullName() }} <span class="caret"></span> <br>{{ Auth::user()->getEmailforPasswordReset() }}
+                            </a>
+
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            </ul>
+
+                        </li>
+
+
+                    @endif
+      </ul>
+    </div>
   </nav>
 
 
 
-<div class="wrapper jsc-sidebar-content jsc-sidebar-pulled">
+      @yield('content')
 
-  <nav class="navbar navbar-default" role="navigation">
-
-
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-
-  <div class="navbar-collapse collapse">
-    <ul class="nav navbar-nav navbar-left">
-      <li><a href="#" class="icon-menu link-menu jsc-sidebar-trigger" style="color:#38B7D1"></a></li>
-
-    </ul>
-
-
-    <ul class="nav navbar-nav navbar-right">
-
-      <!-- Authentication Links -->
-                  @if (Auth::guest())
-                      <li><a style="color:#38B7D1" href="{{ url('/login') }}">Login</a></li>
-                      <li><a style="color:#38B7D1" href="{{ url('/register') }}">Register</a></li>
-                  @else
-                      <li class="dropdown">
-                          <a href="#" style="color:#38B7D1" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                              {{ Auth::user()->getFullName() }} <span class="caret"></span> <br>{{ Auth::user()->getEmailforPasswordReset() }}
-                          </a>
-
-
-                          <ul class="dropdown-menu" role="menu">
-                              <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                          </ul>
-
-                      </li>
-
-
-                  @endif
-    </ul>
   </div>
-</nav>
-
-
-
-    @yield('content')
-
-</div>
 
 
 
 
 
 
-    		<script src="/css/sidebar/js/lib/jquery.min.js"></script>
 
-    		<script src="/css/sidebar/js/sidebar.js"></script>
+      		<script src="/css/sidebar/js/sidebar.js"></script>
 
-    		<script>
-    			$('#jsi-nav').sidebar({
-    				trigger: '.jsc-sidebar-trigger',
-    				scrollbarDisplay: false,
-    				pullCb: function () { console.log('pull'); },
-    				pushCb: function () { console.log('push'); }
-    			});
+      		<script>
+      			$('#jsi-nav').sidebar({
+      				trigger: '.jsc-sidebar-trigger',
+      				scrollbarDisplay: false,
+      				pullCb: function () { console.log('pull'); },
+      				pushCb: function () { console.log('push'); }
+      			});
 
 
-    		</script>
+      		</script>
 
-</body>
-</html>
+  </body>
+  </html>

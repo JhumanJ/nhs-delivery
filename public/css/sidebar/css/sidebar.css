@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
-  overflow-x: hidden; }
+  overflow: scroll;
+   }
 
 .jsc-sidebar {
   text-align: center;
@@ -40,5 +41,4 @@ html, body {
   transform: translate3d(100px, 0, 0); }
 
 .jsc-sidebar-scroll-disabled {
-  position: fixed;
   overflow: hidden; }
