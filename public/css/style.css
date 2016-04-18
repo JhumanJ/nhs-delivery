@@ -32,10 +32,12 @@
 
 body {
 font-family: 'Alleyn Regular';
+	line-height: 1;
   color: #8f8e8e;
   height: 100vh;
-  overflow: scroll;
+  overflow: auto;
   text-align:center;
+  background: radial-gradient(ellipse farthest-corner at center center, #fff 0%, #1cadca 100%);
 
 }
 
@@ -43,15 +45,35 @@ font-family: 'Alleyn Regular';
 
 
 .modal-backdrop {
-  z-index: 0;
+  z-index: -100;
   overflow: scroll;
 }
 
 body.modal-open {
     height: auto;
-    position: relative;
+    position: fixed;
     overflow: scroll;
 }
+
+
+
+
+.modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  display: none;
+  overflow: auto;
+  overflow-y: scroll;
+}
+
+
+
+
+
 
 .user {
   width: 90%;
@@ -129,11 +151,10 @@ body.modal-open {
 }
 
 .form-control {
-  border-radius: 0px;
+  border-radius: 5px;
   border: none;
   display: block;
-  width: 200%;
-  padding: 20px;
+  width: 100%;
   font-family: "Alleyn Regular";
   -webkit-appearance: none;
   border: 0;
@@ -154,9 +175,7 @@ body.modal-open {
 
 .btn{
   display: block;
-  width: 100%;
   padding: 5px;
-  width: 130%;
   font-family: "Alleyn Bold";
   -webkit-appearance: none;
   outline: 0;
@@ -409,7 +428,8 @@ td.text-right {
   background:#fef035;
   text-align: left;
   text-transform: uppercase;
-  padding: 30px 30px 15px 38px;
+  padding: 30px 30px 15px 50px;
+  padding-inline-start: 27px;
   margin-bottom: 10px;
   -webkit-transform: scale(1.1,1.2);
   border-color:transparent;
@@ -423,7 +443,6 @@ td.text-right {
   display: inline-block;
   text-align: left;
   opacity: 0;
-  padding: 0px 20px 20px 20px;
   -webkit-transform: translate3d(0, 500px, 0);
           transform: translate3d(0, 500px, 0);
   -webkit-animation: arrive 0.3s ease-in-out 0.9s forwards;
@@ -516,8 +535,14 @@ border-color:transparent;
     margin-bottom: 20px;
 }
 
-
+.marg-top-sm{
+  margin-top: 20px;
+}
 
 .fa-btn {
     margin-right: 6px;
+}
+
+.btn {
+  background-color: #1cadca;
 }

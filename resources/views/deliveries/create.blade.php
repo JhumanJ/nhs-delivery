@@ -86,14 +86,6 @@
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-plus"></i>Add Package
-                                </button>
-                            </div>
-                        </div>
-
 
                         <label class="col-md-4 control-label">Search for User: </label>
                         <div class="input-group col-md-6">
@@ -102,22 +94,31 @@
                         </div>
 
 
-                    <table id="userList" class="table table-striped delivery-table {{ $errors->has('user_id') ? ' has-error' : '' }}">
+                        <table id="userList" class="table table-striped delivery-table marg-20-btm {{ $errors->has('user_id') ? ' has-error' : '' }}">
 
-                        <!-- Table Headings -->
-                        <thead>
-                             <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Choose</th>
-                        </thead>
+                            <!-- Table Headings -->
+                            <thead>
+                                 <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Choose</th>
+                            </thead>
 
 
-                        <!-- Table Body -->
-                        <tbody id="user-list">
+                            <!-- Table Body -->
+                            <tbody id="user-list">
 
-                        </tbody>
+                            </tbody>
 
-                    </table>
+                        </table>
+
+                         <div class="form-group marg-top-sm">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-btn fa-plus"></i>Add Package
+                                    </button>
+                                </div>
+                        </div>
+
                 </form>
             </div>
         </div>
