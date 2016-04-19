@@ -10,7 +10,7 @@
                     <div class="panel-heading">Welcome</div>
 
                     <div class="panel-body">
-                        Your Application's Landing Page.
+                        Welcome to NHS Delivery Tracker!
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     <div class="panel-heading">Welcome {{ Auth::user()->name }}</div>
 
                     <div class="panel-body">
-                        Your Application's Logged Page. From there you can check your deliveries, or check your profile.
+                        From here you can check your deliveries.
                     </div>
                 </div>
             </div>

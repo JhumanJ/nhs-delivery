@@ -20,7 +20,7 @@
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('reference') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Reference Number: </label>
+                            <label class="col-md-4 control-label">Reference Number: <span style="color:#fdee4a">*</span></label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="reference" value="{{ old('reference') }}">
@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Description: </label>
+                            <label class="col-md-4 control-label">Description: <span style="color:#fdee4a">*</span></label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="description" value="{{ old('description') }}">
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('size') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Size: </label>
+                            <label class="col-md-4 control-label">Size: <span style="color:#fdee4a">*</span></label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="size" value="{{ old('size') }}">
@@ -62,7 +62,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('weight') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Weight: </label>
+                            <label class="col-md-4 control-label">Weight: <span style="color:#fdee4a">*</span></label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="weight" value="{{ old('weight') }}">
@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Picture: </label>
+                            <label class="col-md-4 control-label">Picture: <span style="color:#fdee4a">*</span></label>
                             <div class="col-md-6">
                                 <input id="imgInput" type="file" class="form-control" name="image">
 
@@ -87,7 +87,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 
-                        <label class="col-md-4 control-label">Search for User: </label>
+                        <label class="col-md-4 control-label">Search for User: <span style="color:#fdee4a">*</span></label>
                         <div class="input-group col-md-6">
                           <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-user"></i></span>
                           <input type="text" id="input-search" class="form-control" placeholder="First name or last name" aria-describedby="sizing-addon2" name="search">

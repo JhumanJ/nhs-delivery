@@ -11,7 +11,7 @@
   width: 100%;
   box-sizing: border-box;
    background: radial-gradient(ellipse farthest-corner at center center, #fff 0%, #1cadca 100%);
-   overflow: scroll;
+   overflow: hidden;
    z-index: -1;
    }
 
@@ -71,7 +71,7 @@
 
 
 .sidebar {
-  background-color: #FDF036; }
+  background-color: #fcec59; }
   .sidebar li + li {
     margin-top: 12px; }
   .sidebar li a {

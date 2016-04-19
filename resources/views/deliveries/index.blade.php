@@ -138,7 +138,7 @@
 
                         <div class="marg-20-btm">
                             <form id="delivery-search" class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}">
-                                <label class="col-md-4 control-label">Search for delivery: </label>
+                                <label class="col-md-4 control-label" style="color:#fff"><i class="fa fa-search"></i> SEARCH</label>
                                 <div class="input-group col-md-6">
                                   <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-archive"></i></span>
                                   <input type="text" id="input-search" class="form-control" placeholder="Reference or description" aria-describedby="sizing-addon2" name="search">
@@ -149,7 +149,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             <i class="fa fa-clock-o"></i> Awaiting Deliveries
+                             <i class="fa fa-clock-o"></i> Your Awaiting Deliveries
                         </div>
 
                         <div class="panel-body">
@@ -188,7 +188,7 @@
                                             </td>
 
                                             <td class="table-text">
-                                                <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->id.'') }}" ><i class="fa fa-search"></i> Details</button>
+                                                <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->id.'') }}" ><i class="fa fa-search-plus"></i> Details</button>
                                             </td>
 
 
@@ -209,7 +209,7 @@
 
                          <div class="panel panel-default">
                         <div class="panel-heading">
-                             <i class="fa fa-check-circle"></i> Past Deliveries
+                             <i class="fa fa-check-circle"></i> Your Past Deliveries
                         </div>
 
                         <div class="panel-body">
@@ -248,7 +248,7 @@
                                             </td>
 
                                             <td class="table-text">
-                                                <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showPastModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->id.'') }}" data-srcSignature="{{ url('/image/signature/'.$delivery->id.'') }}"><i class="fa fa-search"></i> Details</button>
+                                                <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showPastModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->id.'') }}" data-srcSignature="{{ url('/image/signature/'.$delivery->id.'') }}"><i class="fa fa-search-plus"></i> Details</button>
                                             </td>
 
 
@@ -291,13 +291,13 @@
                                 for (i = 0; i < data.length; i++) {
                                     if (data[i].status ==1){
                                         $toAppend = '<tr><td class="table-text"><div>'+ data[i].reference + '</div></td><td class="table-text"><div>'+ data[i].description +'</div></td><td class="table-text"><div>'+ data[i].size +'</div></td><td class="table-text"><div>'+ data[i].weight +'</div></td>';
-                                        $toAppend = $toAppend + '<td><button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="'+data[i].reference+'" data-description="'+data[i].description+'" data-size="'+data[i].size+'" data-weight="'+data[i].weight+'" data-src="/image/delivery/'+ data[i].id + ' " ><i class="fa fa-search"></i> Details</button></td>';
+                                        $toAppend = $toAppend + '<td><button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="'+data[i].reference+'" data-description="'+data[i].description+'" data-size="'+data[i].size+'" data-weight="'+data[i].weight+'" data-src="/image/delivery/'+ data[i].id + ' " ><i class="fa fa-search-plus"></i> Details</button></td>';
                                         $toAppend = $toAppend +'</tr>';
                                         $('#awaiting-delivery-list').append($toAppend);
                                     }
                                     if(data[i].status ==2){
                                         $toAppend = '<tr><td class="table-text"><div>'+ data[i].reference + '</div></td><td class="table-text"><div>'+ data[i].description +'</div></td><td class="table-text"><div>'+ data[i].size +'</div></td><td class="table-text"><div>'+ data[i].weight +'</div></td>';
-                                        $toAppend = $toAppend + '<td><button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showPastModal" data-reference="'+data[i].reference+'" data-description="'+data[i].description+'" data-size="'+data[i].size+'" data-weight="'+data[i].weight+'" data-src="/image/delivery/'+ data[i].id + '" data-srcsignature="/image/signature/'+data[i].id+' " ><i class="fa fa-search"></i> Details</button>';
+                                        $toAppend = $toAppend + '<td><button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showPastModal" data-reference="'+data[i].reference+'" data-description="'+data[i].description+'" data-size="'+data[i].size+'" data-weight="'+data[i].weight+'" data-src="/image/delivery/'+ data[i].id + '" data-srcsignature="/image/signature/'+data[i].id+' " ><i class="fa fa-search-plus"></i> Details</button>';
                                         $toAppend = $toAppend +'</td></tr>';
 
                                         console.log($toAppend);

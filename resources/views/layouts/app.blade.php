@@ -46,6 +46,7 @@
     <ul class="sidebar-list">
 
 
+
       <!-- Branding Image -->
 
     <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -53,7 +54,7 @@
       <ul class="nav navbar-nav">
 
         <p></p>
-        <li><a class="navbar-brand home" style="width:70px;height:63px" href="{{ url('/') }}">
+        <li style="text-align:center"><a class="home" style="width:70px;height:63px" href="{{ url('/') }}">
         </a></li><br>
           @if (!Auth::guest())
           <li><a class="collect" style="width:70px;height:63px" href="{{ url('deliveries') }}"></a></li><br>
@@ -61,7 +62,10 @@
 
               @if (Auth::user()->isStaff())
                   <li><a class="add" style="width:76px;height:69px" href="{{ url('create') }}"></a></li><br>
-                  <li><a class="delete" style="width:76px;height:69px" href="{{ url('deliveries-all') }}"></a></li><br>
+                  <li><a class="delete" style="width:76px;height:69px" href="{{ url('deliveries-awaiting') }}"></a></li><br>
+                  <li><a class="list" style="width:76px;height:69px" href="{{ url('deliveries-past') }}"></a></li><br>
+                  <li><a class="canlist" style="width:76px;height:69px" href="{{ url('deliveries-cancelled') }}"></a></li><br>
+
               @endif
 
               <li><a class="logout" style="width:70px;height:63px" href="{{ url('/logout') }}"></a></li><br>
@@ -77,8 +81,16 @@
 
     <nav class="navbar navbar-default" role="navigation">
 
+    <div class="hidden-phone">  <ul class="nav navbar-nav navbar-left">
+        <li><a href=javascript:void(0) class="icon-menu link-menu jsc-sidebar-trigger" style="color:#38B7D1"></a></li>
+
+      </ul></div>
 
       <div class="navbar-header">
+
+        <div style="text-align:center">
+     <img src="css/icons/sabp-logo.jpg"  class="img-responsive navbar-brand">  </div>
+
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -87,10 +99,12 @@
       </div>
 
     <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-left">
-        <li><a href="#" class="icon-menu link-menu jsc-sidebar-trigger" style="color:#38B7D1"></a></li>
 
-      </ul>
+    <div class="hidden-other">  <ul class="nav navbar-nav navbar-left">
+        <li><a href=javascript:void(0) class="icon-menu link-menu jsc-sidebar-trigger" style="color:#38B7D1"></a></li>
+
+      </ul></div>
+
 
 
       <ul class="nav navbar-nav navbar-right">

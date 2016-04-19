@@ -74,6 +74,23 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'DeliveryController@indexAll'
     ]);
 
+    Route::get('/deliveries-awaiting', [
+        'middleware' => 'receptionnist',
+        'uses' => 'DeliveryController@awaiting'
+    ]);
+
+
+    Route::get('/deliveries-past', [
+        'middleware' => 'receptionnist',
+        'uses' => 'DeliveryController@past'
+    ]);
+
+
+    Route::get('/deliveries-cancelled', [
+        'middleware' => 'receptionnist',
+        'uses' => 'DeliveryController@cancelled'
+    ]);
+
     //---Manage deliveries---
 
     Route::delete('/delete/{delivery}', [

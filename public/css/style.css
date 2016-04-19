@@ -35,24 +35,25 @@ font-family: 'Alleyn Regular';
 	line-height: 1;
   color: #8f8e8e;
   height: 100vh;
-  overflow: auto;
   text-align:center;
   background: radial-gradient(ellipse farthest-corner at center center, #fff 0%, #1cadca 100%);
 
 }
 
 
+a img {outline : none;}
+
 
 
 .modal-backdrop {
   z-index: -100;
-  overflow: scroll;
+
 }
 
 body.modal-open {
-    height: auto;
+    height: 120%;
+    width: 100%;
     position: fixed;
-    overflow: scroll;
 }
 
 
@@ -67,7 +68,6 @@ body.modal-open {
   z-index: 1040;
   display: none;
   overflow: auto;
-  overflow-y: scroll;
 }
 
 
@@ -102,7 +102,7 @@ body.modal-open {
 
 .form {
   font-family: "Alleyn Regular";
-  border-radius: 20px;
+  border-radius: 10px;
   opacity: 0;
   -webkit-transform: translate3d(0, 500px, 0);
           transform: translate3d(0, 500px, 0);
@@ -151,7 +151,7 @@ body.modal-open {
 }
 
 .form-control {
-  border-radius: 5px;
+  border-radius: 10px;
   border: none;
   display: block;
   width: 100%;
@@ -162,9 +162,14 @@ body.modal-open {
   -webkit-transition: 0.3s;
   transition: 0.3s;
   margin-bottom:-12px;
-
-
 }
+
+
+
+.input-group-addon {
+  border-radius: 10px;
+}
+
 .form-control:hover {
   background: #f7f7f7;
 }
@@ -425,7 +430,7 @@ td.text-right {
   font-size:25px;
   font-weight:bold;
   color:#fff;
-  background:#fef035;
+  background:#7cc04b;
   text-align: left;
   text-transform: uppercase;
   padding: 30px 30px 15px 50px;
@@ -434,6 +439,7 @@ td.text-right {
   -webkit-transform: scale(1.1,1.2);
   border-color:transparent;
 }
+
 
 .panel {
   font-family:Alleyn Regular;
@@ -449,8 +455,8 @@ td.text-right {
           animation: arrive 0.3s ease-in-out 0.9s forwards;
 box-shadow: 1px 3px 1px #53a2b2;
 border-color:transparent;
+width: 100%;
 }
-
 
 
 
@@ -506,6 +512,17 @@ border-color:transparent;
 }
 
 
+.canlist {
+  background-image:url("icons/canlist.png");
+  border: none;
+  background-size: 100% 100%;
+  text-align:center;
+  background-position: center;
+  margin-bottom: 15px;
+
+}
+
+
 .logout {
   background-image:url("icons/logout.png");
   border: none;
@@ -514,6 +531,19 @@ border-color:transparent;
   background-position: center;
   margin-bottom: 15px;
 
+}
+
+@media only screen and (max-width: 760px) {
+  .hidden-phone{
+   display: none;
+   }
+}
+
+
+@media only screen and (min-width: 760px) {
+  .hidden-other{
+   display: none;
+   }
 }
 
 

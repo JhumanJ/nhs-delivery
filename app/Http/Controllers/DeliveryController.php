@@ -125,6 +125,63 @@ class DeliveryController extends Controller
 
     }
 
+    public function awaiting(Request $request) {
+
+
+              $awaiting_deliveries = Delivery::where('deliveries.status', 1)
+                          ->orderBy('deliveries.updated_at', 'desc')
+                          ->join('users', 'users.id', '=', 'user_id')
+                          ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
+                          ->get();
+
+
+
+              return view('deliveries.awaiting', [
+                  'awaiting_deliveries'   => $awaiting_deliveries,
+
+              ]);
+
+
+    }
+
+
+    public function past(Request $request) {
+
+
+      $past_deliveries = Delivery::where('deliveries.status', 2)
+                  ->orderBy('deliveries.updated_at', 'desc')
+                  ->join('users', 'users.id', '=', 'user_id')
+                  ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
+                  ->get();;
+
+
+      return view('deliveries.past', [
+          'past_deliveries'       => $past_deliveries,
+
+      ]);
+
+
+
+    }
+
+    public function cancelled(Request $request) {
+
+
+
+      $cancelled_deliveries = Delivery::where('deliveries.status', 0)
+          ->orderBy('deliveries.updated_at', 'desc')
+          ->join('users', 'users.id', '=', 'user_id')
+          ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
+          ->get();;
+
+      return view('deliveries.cancelled', [
+          'cancelled_deliveries'  => $cancelled_deliveries,
+      ]);
+
+
+
+    }
+
     public function indexSearchAjax(Request $request, $search){
 
         //Allows only ajax request
@@ -170,6 +227,7 @@ class DeliveryController extends Controller
                 $array['size']          =$delivery->size;
                 $array['weight']        =$delivery->weight;
                 $array['status']        =$delivery->status;
+
 
                 if($delivery->user_id==$request->user()->id) {
                     array_push($result, $array);
