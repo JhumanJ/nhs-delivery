@@ -74,6 +74,23 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'DeliveryController@indexAll'
     ]);
 
+    Route::get('/deliveries-awaiting', [
+        'middleware' => 'receptionnist',
+        'uses' => 'DeliveryController@awaiting'
+    ]);
+
+
+    Route::get('/deliveries-past', [
+        'middleware' => 'receptionnist',
+        'uses' => 'DeliveryController@past'
+    ]);
+
+
+    Route::get('/deliveries-cancelled', [
+        'middleware' => 'receptionnist',
+        'uses' => 'DeliveryController@cancelled'
+    ]);
+
     //---Manage deliveries---
 
     Route::delete('/delete/{delivery}', [
@@ -110,6 +127,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/search/delivery/{search}', [
         'middleware' => 'auth',
         'uses' => 'DeliveryController@indexSearchAjax'
+    ]);
+
+    //Search for delivery on admin page
+    Route::get('/search/admin/{search}', [
+        'middleware' => 'receptionnist',
+        'uses' => 'DeliveryController@adminAjax'
     ]);
 
 

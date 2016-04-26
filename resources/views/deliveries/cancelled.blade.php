@@ -8,7 +8,7 @@
 
     <!-- Bootstrap Boilerplate... -->
     <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-10 col-md-offset-1">
 
 
         <!-- Display Validation Errors -->
@@ -200,170 +200,29 @@
           </div>
         </div>
 
-        @if (count($awaiting_deliveries) == 0 && count($past_deliveries) == 0 && count($cancelled_deliveries) == 0)
+        @if (count($cancelled_deliveries) == 0)
                      <div class="panel panel-default">
                         <div class="panel-body">
                         No deliveries yet.
                         </div>
                      </div>
-        @else
+
+
+         @else
+
             <div class="marg-20-btm">
                 <form id="delivery-search" class="form-horizontal" role="form" method="POST" action="{{ url('/delivery') }}">
-                    <label class="col-md-4 control-label">Search for delivery: </label>
+                    <label class="col-md-4 control-label search-label"><i class="fa fa-search"></i> SEARCH </label>
                     <div class="input-group col-md-6">
                       <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-archive"></i></span>
                       <input type="text" id="input-search" class="form-control" placeholder="Reference or description" aria-describedby="sizing-addon2" name="search">
                     </div>
                 </form>
             </div>
+
         @endif
 
-        @if (count($awaiting_deliveries) > 0)
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                     <i class="fa fa-clock-o"></i> Awaiting Deliveries
-                </div>
 
-                <div class="panel-body">
-                    <table class="table table-striped delivery-table">
-
-                        <!-- Table Headings -->
-                        <thead>
-                        <th>Reference</th>
-                        <th>Description</th>
-                        <th>Size</th>
-                         <th>Weight</th>
-                         <th >Destinate to</th>
-                         <th class="text-center">Show</th>
-                         <th class="text-center">Edit</th>
-                         <th class="text-center">Mark as Collected</th>
-                         <th class="text-center">Cancel</th>
-                        </thead>
-
-                        <!-- Table Body -->
-                        <tbody id="awaiting-delivery-list">
-                        @foreach ($awaiting_deliveries as $delivery)
-
-                                <tr>
-                                    <!-- Task Name -->
-                                    <td class="table-text">
-                                        <div>{{ $delivery->reference }}</div>
-                                    </td>
-
-                                    <td class="table-text">
-                                        <div>{{ $delivery->description }}</div>
-                                    </td>
-
-                                    <td class="table-text">
-                                        <div>{{ $delivery->size }}</div>
-                                    </td>
-
-                                     <td class="table-text">
-                                        <div>{{ $delivery->weight }}</div>
-                                    </td>
-
-                                    <td class="table-text">
-                                        {{ $delivery->firstName.' '.$delivery->lastName }}
-                                    </td>
-
-                                    <td class="table-text">
-                                            <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->deliveryId.'') }}"><i class="fa fa-search"></i> Details</button>
-                                    </td>
-
-                                     <td class="table-text">
-                                        <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#editModal" data-reference="{{$delivery->reference}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-id="{{$delivery->deliveryId}}"><i class="fa fa-pencil"></i> Edit</button>
-                                    </td>
-
-                                     <td class="table-text">
-
-                                             <button type="submit" class="btn btn-warning btn-sm center-block" data-toggle="modal" data-target="#signatureModal" data-id="{{$delivery->deliveryId}}" data-reference="{{$delivery->reference}}"><i class="fa fa-archive"></i> Collect</button>
-
-                                    </td>
-
-                                     <td class="table-text">
-                                        <form action="{{ url('cancel/'.$delivery->deliveryId) }}" method="POST">
-                                            {!! csrf_field() !!}
-
-                                             <button type="submit" class="btn btn-danger btn-sm center-block" ><i class="fa fa-times"></i> Cancel</button>
-
-                                        </form>
-                                    </td>
-
-
-                                </tr>
-
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                </div>
-                @endif
-
-                 @if (count($past_deliveries) > 0)
-                 <div class="panel panel-default">
-                <div class="panel-heading">
-                     <i class="fa fa-check-circle"></i> Past Deliveries
-                </div>
-
-                <div class="panel-body">
-                    <table class="table table-striped delivery-table">
-
-                        <!-- Table Headings -->
-                        <thead>
-                        <th>Reference</th>
-                        <th>Description</th>
-                        <th>Size</th>
-                        <th>Weight</th>
-                        <th>Destinate to</th>
-                        <th class="text-center">Show</th>
-
-                        </thead>
-
-                        <!-- Table Body -->
-                        <tbody id="past-delivery-list">
-                        @foreach ($past_deliveries as $delivery)
-
-                                <tr>
-                                    <!-- Task Name -->
-                                    <td class="table-text">
-                                        <div>{{ $delivery->reference }}</div>
-                                    </td>
-
-                                    <td class="table-text">
-                                        <div>{{ $delivery->description }}</div>
-                                    </td>
-
-                                     <td class="table-text">
-                                        <div>{{ $delivery->size }}</div>
-                                    </td>
-
-                                    <td class="table-text">
-                                        <div>{{ $delivery->weight }}</div>
-                                    </td>
-
-                                    <td class="table-text">
-                                        {{ $delivery->firstName.' '.$delivery->lastName }}
-                                    </td>
-
-                                    <td class="table-text">
-                                            <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showPastModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->deliveryId.'') }} " data-srcSignature="{{ url('/image/signature/'.$delivery->deliveryId.'') }}"><i class="fa fa-search"></i> Details</button>
-                                    </td>
-
-
-
-                                </tr>
-
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                </div>
-
-
-
-             @endif
 
 
             @if (Auth::user()->isAdmin())
@@ -376,7 +235,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <table class="table table-striped delivery-table">
+                    <table class="table table-responsive table-condensed table-striped delivery-table">
 
                         <!-- Table Headings -->
                         <thead>
@@ -417,7 +276,7 @@
                                     </td>
 
                                     <td class="table-text">
-                                            <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->deliveryId.'') }}"><i class="fa fa-search"></i> Details</button>
+                                            <button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="{{$delivery->reference}}" data-status="{{$delivery->status}}" data-description="{{$delivery->description}}" data-size="{{$delivery->size}}" data-weight="{{$delivery->weight}}" data-src="{{ url('/image/delivery/'.$delivery->deliveryId.'') }}"><i class="fa fa-search-plus"></i> Details</button>
                                     </td>
 
                                     <td class="table-text">
@@ -440,27 +299,13 @@
                 </div>
 
                 </div>
+
+                <div style="height:200px;opacity:0.0"></div>
                 </div>
                 </div>
 
             @endif
-         @else
-            @if (count($awaiting_deliveries) < 1)
-                @if (count($past_deliveries) < 1)
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <div class="panel panel-default">
 
-                            <div class="panel-body">
-                                There are no deliveries yet.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-            @endif
          @endif
 
 
@@ -483,26 +328,8 @@
 
                     console.log(data);
 
-                    $('#awaiting-delivery-list').empty();
-                    $('#past-delivery-list').empty();
                     $('#cancelled-delivery-list').empty();
                     for (i = 0; i < data.length; i++) {
-                        if (data[i].status ==1){
-                            $toAppend = '<tr><td class="table-text"><div>'+ data[i].reference + '</div></td><td class="table-text"><div>'+ data[i].description +'</div></td><td class="table-text"><div>'+ data[i].size +'</div></td><td class="table-text"><div>'+ data[i].weight +'</div></td><td><div>'+ data[i].firstName +' '+data[i].lastName + '</div></td>';
-                            $toAppend = $toAppend + '<td><button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showModal" data-reference="'+data[i].reference+'" data-description="'+data[i].description+'" data-size="'+data[i].size+'" data-weight="'+data[i].weight+'" data-src="/image/delivery/'+ data[i].id + ' " ><i class="fa fa-search"></i> Details</button></td>';
-                            $toAppend = $toAppend + '<td><button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#editModal" data-reference="'+data[i].reference+'" data-description="'+data[i].description+'" data-size="'+data[i].size+'" data-weight="'+data[i].weight+'" data-id='+data[i].id+'"><i class="fa fa-pencil"></i> Edit</button></td>';
-                            $toAppend = $toAppend + '<td><button type="submit" class="btn btn-warning btn-sm center-block" data-toggle="modal" data-target="#signatureModal" data-id="'+data[i].id+'" data-reference="'+data[i].reference+'"><i class="fa fa-archive"></i> Collect</button></td>';
-                            $toAppend = $toAppend + '<td><form action="cancel/'+data[i].id+'" method="POST">'+$token+'<button type="submit" class="btn btn-danger btn-sm center-block" ><i class="fa fa-times"></i> Cancel</button></form></td>';
-                            $toAppend = $toAppend +'</tr>';
-                            $('#awaiting-delivery-list').append($toAppend);
-                        }
-                        if(data[i].status ==2){
-                            $toAppend = '<tr><td class="table-text"><div>'+ data[i].reference + '</div></td><td class="table-text"><div>'+ data[i].description +'</div></td><td class="table-text"><div>'+ data[i].size +'</div></td><td class="table-text"><div>'+ data[i].weight +'</div></td><td><div>'+ data[i].firstName +' '+data[i].lastName + '</div></td>';
-                            $toAppend = $toAppend + '<td><button type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#showPastModal" data-reference="'+data[i].reference+'" data-description="'+data[i].description+'" data-size="'+data[i].size+'" data-weight="'+data[i].weight+'" data-src="/image/delivery/'+ data[i].id + '" data-srcsignature="/image/signature/'+data[i].id+' " ><i class="fa fa-search"></i> Details</button>';
-                            $toAppend = $toAppend +'</td></tr>';
-
-                            $('#past-delivery-list').append($toAppend);
-                        }
 
                         if(data[i].status ==0){
                             $toAppend = '<tr><td class="table-text"><div>'+ data[i].reference + '</div></td><td class="table-text"><div>'+ data[i].description +'</div></td><td class="table-text"><div>'+ data[i].size +'</div></td><td class="table-text"><div>'+ data[i].weight +'</div></td><td><div>'+ data[i].firstName +' '+data[i].lastName + '</div></td>';
@@ -513,12 +340,13 @@
                             $('#cancelled-delivery-list').append($toAppend);
                         }
 
+
+
                     }
 
                 })
 
             });
-
 
             $('#editModal').on('show.bs.modal', function (event) {
                   var button = $(event.relatedTarget); // Button that triggered the modal

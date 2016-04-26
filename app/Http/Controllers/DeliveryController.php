@@ -82,16 +82,16 @@ class DeliveryController extends Controller
 
         Image::make($request->file('image'))->save(storage_path().'/app/public/img/deliveries/'.$id.'.jpg',60);
 
-//        $user = User::find($request->user_id);
-//        $delivery = Delivery::find($id);
-//
-//        Mail::send('emails.new', ['user' => $user, 'delivery' => $delivery], function ($m) use ($user) {
-//            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
-//
-//            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package waiting at Reception');
-//        });
+        $user = User::find($request->user_id);
+        $delivery = Delivery::find($id);
 
-        return redirect('/deliveries-all');
+        Mail::send('emails.new', ['user' => $user, 'delivery' => $delivery], function ($m) use ($user) {
+            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
+
+            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package waiting at Reception');
+        });
+
+        return redirect('/deliveries-awaiting');
 
     }
 
@@ -103,19 +103,22 @@ class DeliveryController extends Controller
                     ->orderBy('deliveries.updated_at', 'desc')
                     ->join('users', 'users.id', '=', 'user_id')
                     ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
+                    ->take(50)
                     ->get();
 
         $past_deliveries = Delivery::where('deliveries.status', 2)
                     ->orderBy('deliveries.updated_at', 'desc')
                     ->join('users', 'users.id', '=', 'user_id')
                     ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
-                    ->get();;
+                    ->take(50)
+                    ->get();
 
         $cancelled_deliveries = Delivery::where('deliveries.status', 0)
             ->orderBy('deliveries.updated_at', 'desc')
             ->join('users', 'users.id', '=', 'user_id')
             ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
-            ->get();;
+            ->take(50)
+            ->get();
 
         return view('deliveries.all-index', [
             'awaiting_deliveries'   => $awaiting_deliveries,
@@ -123,6 +126,124 @@ class DeliveryController extends Controller
             'cancelled_deliveries'  => $cancelled_deliveries,
         ]);
 
+    }
+
+    public function awaiting(Request $request) {
+
+
+        $awaiting_deliveries = Delivery::where('deliveries.status', 1)
+            ->orderBy('deliveries.updated_at', 'desc')
+            ->join('users', 'users.id', '=', 'user_id')
+            ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
+            ->get();
+
+
+
+        return view('deliveries.awaiting', [
+            'awaiting_deliveries'   => $awaiting_deliveries,
+
+        ]);
+
+
+    }
+
+
+    public function past(Request $request) {
+
+
+        $past_deliveries = Delivery::where('deliveries.status', 2)
+            ->orderBy('deliveries.updated_at', 'desc')
+            ->join('users', 'users.id', '=', 'user_id')
+            ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
+            ->get();;
+
+
+        return view('deliveries.past', [
+            'past_deliveries'       => $past_deliveries,
+
+        ]);
+
+
+
+    }
+
+    public function cancelled(Request $request) {
+
+
+
+        $cancelled_deliveries = Delivery::where('deliveries.status', 0)
+            ->orderBy('deliveries.updated_at', 'desc')
+            ->join('users', 'users.id', '=', 'user_id')
+            ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
+            ->get();;
+
+        return view('deliveries.cancelled', [
+            'cancelled_deliveries'  => $cancelled_deliveries,
+        ]);
+
+
+
+    }
+
+    public function adminAjax(Request $request, $search){
+        //Allows only ajax request
+        if (!request()->ajax()){
+            return redirect('deliveries');
+        }
+
+        //search is the parameter
+        if ($search != "" && $search != " " && $search != "all") {
+
+            $deliveries = DB::table('deliveries')
+                ->orderBy('deliveries.updated_at', 'desc')
+                ->where('deliveries.reference','like', '%'.$search.'%')
+                ->orWhere('deliveries.description', 'like', '%'.$search.'%')
+                ->join('users', 'users.id', '=', 'user_id')
+                ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.status as status, deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
+                ->take(50)
+                ->get();
+
+            $result = array();
+            foreach ($deliveries as $delivery){
+                $array['id']            =$delivery->deliveryId;
+                $array['reference']     =$delivery->reference;
+                $array['description']   =$delivery->description;
+                $array['size']          =$delivery->size;
+                $array['weight']        =$delivery->weight;
+                $array['status']        =$delivery->status;
+                $array['firstName']     =$delivery->firstName;
+                $array['lastName']      =$delivery->lastName;
+
+                array_push($result, $array);
+
+            }
+
+        } else if($search == "all"){
+            $deliveries = DB::table('deliveries')
+                ->orderBy('deliveries.updated_at', 'desc')
+                ->join('users', 'users.id', '=', 'user_id')
+                ->select(DB::raw("deliveries.id as deliveryId,users.id as userId, deliveries.reference as reference,deliveries.status as status, deliveries.description as description, deliveries.size as size, deliveries.weight as weight, users.firstName as firstName, users.lastName as lastName"))
+                ->take(50)
+                ->get();
+
+            $result = array();
+            foreach ($deliveries as $delivery){
+                $array['id']            =$delivery->deliveryId;
+                $array['reference']     =$delivery->reference;
+                $array['description']   =$delivery->description;
+                $array['size']          =$delivery->size;
+                $array['weight']        =$delivery->weight;
+                $array['status']        =$delivery->status;
+                $array['firstName']      =$delivery->firstName;
+                $array['lastName']      =$delivery->lastName;
+
+                array_push($result, $array);
+
+            }
+        }
+
+
+        return response()->json($result);
     }
 
     public function indexSearchAjax(Request $request, $search){
@@ -184,7 +305,7 @@ class DeliveryController extends Controller
     public function destroy(Request $request, $delivery)
     {
         DB::table('deliveries')->where('id',$delivery)->delete();
-        return redirect('/deliveries-all');
+        return redirect('/deliveries-cancelled');
     }
 
     public function cancel(Request $request, $delivery) {
@@ -192,16 +313,16 @@ class DeliveryController extends Controller
             ->where('id', $delivery)
             ->update(['status' => 0, 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]);
 //
-//        $deliveryToCancel = Delivery::find($delivery);
-//        $user = User::find($deliveryToCancel->user_id);
-//
-//        Mail::send('emails.cancel', ['user' => $user, 'delivery' => $deliveryToCancel], function ($m) use ($user) {
-//            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
-//
-//            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Cancelled');
-//        });
+        $deliveryToCancel = Delivery::find($delivery);
+        $user = User::find($deliveryToCancel->user_id);
 
-        return redirect('/deliveries-all');
+        Mail::send('emails.cancel', ['user' => $user, 'delivery' => $deliveryToCancel], function ($m) use ($user) {
+            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
+
+            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Cancelled');
+        });
+
+        return redirect('/deliveries-awaiting');
     }
 
     public function collect(Request $request, $delivery) {
@@ -219,16 +340,16 @@ class DeliveryController extends Controller
             ->where('id', $delivery)
             ->update(['status' => 2, 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]);
 
-//        $deliveryToCollect = Delivery::find($delivery);
-//        $user = User::find($deliveryToCollect->user_id);
-//
-//        Mail::send('emails.collect', ['user' => $user, 'delivery' => $deliveryToCollect], function ($m) use ($user) {
-//            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
-//
-//            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Collected');
-//        });
+        $deliveryToCollect = Delivery::find($delivery);
+        $user = User::find($deliveryToCollect->user_id);
 
-        return redirect('/deliveries-all');
+        Mail::send('emails.collect', ['user' => $user, 'delivery' => $deliveryToCollect], function ($m) use ($user) {
+            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
+
+            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Collected');
+        });
+
+        return redirect('/deliveries-awaiting');
     }
 
     public function edit(Request $request) {
@@ -249,16 +370,16 @@ class DeliveryController extends Controller
                     'weight'       => $request->weight,
                     'updated_at'   => \Carbon\Carbon::now()->toDateTimeString()]);
 
-//        $deliveryToEdit = Delivery::find($request->id);
-//        $user = User::find($deliveryToEdit->user_id);
-//
-//        Mail::send('emails.edit', ['user' => $user, 'delivery' => $deliveryToEdit], function ($m) use ($user) {
-//            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
-//
-//            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Information Edited');
-//        });
+        $deliveryToEdit = Delivery::find($request->id);
+        $user = User::find($deliveryToEdit->user_id);
 
-        return redirect('/deliveries-all');
+        Mail::send('emails.edit', ['user' => $user, 'delivery' => $deliveryToEdit], function ($m) use ($user) {
+            $m->from('nhsdelivery@unisales.co.uk', 'NHS Delivery');
+
+            $m->to($user->email, $user->firstName. $user->lastName)->subject('Package Information Edited');
+        });
+
+        return redirect('/deliveries-awaiting');
 
 
     }
