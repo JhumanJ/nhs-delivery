@@ -192,8 +192,8 @@
 
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-             <button type="submit" class="btn btn-primary">Save</button>
+
+             <button type="submit" class="btn btn-primary center-block">Save</button>
               </div>
               </form>
             </div>
@@ -317,6 +317,14 @@
             $token = '{!! csrf_field() !!}';
             $deleteMethod = '{!! method_field('DELETE') !!}';
 
+            $(document).ready(function() {
+              $(window).keydown(function(event){
+                if(event.keyCode == 13) {
+                  event.preventDefault();
+                  return false;
+                }
+              });
+});
 
             $('#input-search').on('input',function(){
                 $search = $('#input-search').val();

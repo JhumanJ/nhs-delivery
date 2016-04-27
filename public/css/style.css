@@ -598,3 +598,6 @@ td.text-right {
   font-family:Alleyn Regular;
   text-transform: uppercase;
 }
+.inline-block {
+  display: inline-block;
+}

@@ -32,8 +32,11 @@
 
                         <div id="signature" class="height-250"></div>
 
-                        <button id="clearButton" class="btn btn-warning">Clear</button>
-                        <button id="collectButton" class="btn btn-primary">Collect</button>
+                        <div class="center-block">
+                            <button id="clearButton" class="btn btn-warning inline-block ">Clear</button>
+                            <button id="collectButton" class="btn btn-primary inline-block ">Collect</button>
+                        </div>
+
 
                         <form id="collectForm" action="{{ url('collect/') }}" method="POST">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -132,8 +135,8 @@
 
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-             <button type="submit" class="btn btn-primary">Save</button>
+
+                <button type="submit" class="btn btn-primary center-block">Save</button>
               </div>
               </form>
             </div>
@@ -275,6 +278,15 @@
 
 
          <script>
+
+            $(document).ready(function() {
+              $(window).keydown(function(event){
+                if(event.keyCode == 13) {
+                  event.preventDefault();
+                  return false;
+                }
+              });
+            });
 
             $token = '{!! csrf_field() !!}';
             $deleteMethod = '{!! method_field('DELETE') !!}';
