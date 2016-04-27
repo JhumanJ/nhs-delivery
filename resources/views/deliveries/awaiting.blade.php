@@ -353,7 +353,7 @@
                             if (button.data('status')==1) {
                                 modal.find('.modal-title').text('Delivery: ' + recipient);
                             } else {
-                                modal.find('.modal-title').text('Past Delivery: ' + recipient);
+                                modal.find('.modal-title').text('Delivery: ' + recipient);
                             }
 
                             modal.find('.modal-body #modalReference').text(recipient);
